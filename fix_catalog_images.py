@@ -6,7 +6,7 @@ archive=Path("Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip")
 with zipfile.ZipFile(archive) as z:
     html=z.read("index.html").decode("utf-8")
     names=set(z.namelist())
-pattern=re.compile(r'(<a\\s+class="cover"\\s+href="(?P<img>previews/(?:LP|SI|LV)\\d{2}\\.webp)"\\s+rel="noopener"\\s+target="_blank">)\\s*(</a>)')
+pattern=re.compile(r'(<a\s+class="cover"\s+href="(?P<img>previews/(?:LP|SI|LV)\d{2}\.webp)"\s+rel="noopener"\s+target="_blank">)\s*(</a>)')
 def replace(match):
     asset=match.group("img")
     assert asset in names, "Missing image: "+asset
