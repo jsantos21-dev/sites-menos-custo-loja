@@ -1,0 +1,30 @@
+name: Inspect storefront source
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/inspect-storefront.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect public storefront files without printing secrets
+        run: |
+          python3 - <<'PY'
+          import zipfile,re
+          archive='Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip'
+          with zipfile.ZipFile(archive) as z:
+            print('FILES',[(x.filename,x.file_size) for x in z.infolist() if not x.is_dir()][:60])
+            names=z.namelist()
+            for name in [n for n in names if n.lower().endswith(('.html','.js','.json'))][:18]:
+              s=z.read(name).decode('utf-8','replace')
+              print('FILE',name,'SIZE',len(s))
+              if name.endswith('.html'):
+                print('BEGINHTML',s[:5000])
+              for match in list(re.finditer(r'997|497|297|197|97|checkout|carrinho|pix|pagamento|paylink',s,re.I))[:24]:
+                print('CONTEXT',name,match.start(),repr(s[max(0,match.start()-210):match.start()+310]))
+          PY
