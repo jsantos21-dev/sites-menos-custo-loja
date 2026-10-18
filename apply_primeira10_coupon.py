@@ -75,7 +75,7 @@ assert html.count('PRIMEIRA10')>=10
 assert 'function couponDiscount()' in html
 assert 'function applyCoupon()' in html
 assert 'checkoutStage=1;drawShop()' in html
-assert html.count('onclick="addToCart(\\'P10-') == 2
+assert html.count("addToCart('P10-") == 2
 
 fd,tmp=tempfile.mkstemp(prefix=".smc-primeira10-",suffix=".zip",dir=archive.parent)
 os.close(fd)
