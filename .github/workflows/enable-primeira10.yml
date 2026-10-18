@@ -1,0 +1,56 @@
+name: Enable PRIMEIRA10 storefront coupon
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apply_primeira10_coupon.py"
+      - ".github/workflows/enable-primeira10.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install coupon inside storefront ZIP
+        run: python3 apply_primeira10_coupon.py
+      - name: Validate coupon logic
+        run: |
+          python3 - <<'PY'
+          import zipfile
+          with zipfile.ZipFile('Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip') as z:
+              html=z.read('index.html').decode('utf-8')
+              assert 'id="smc-primeira10-styles"' in html
+              assert html.count('R$ 897,30 com cupom')==2
+              assert 'function couponDiscount()' in html
+              assert 'function applyCoupon()' in html
+              assert z.testzip() is None
+              with open('/tmp/smc-storefront.js','w') as f:
+                  f.write(html.rsplit('<script>',1)[-1].split('</script>',1)[0])
+          print('Static coupon and ZIP checks passed')
+          PY
+          node --check /tmp/smc-storefront.js
+          node - <<'JS'
+          const fs=require('fs'),vm=require('vm');
+          const node={textContent:'',value:'PRIMEIRA10',classList:{add(){},remove(){}},addEventListener(){},style:{},innerHTML:''};
+          const store={};
+          const ctx=vm.createContext({document:{querySelector:()=>node,getElementById:()=>node,addEventListener(){}},localStorage:{getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v,removeItem:k=>delete store[k]},navigator:{},crypto:{getRandomValues:a=>a.fill(3)},console});
+          vm.runInContext(fs.readFileSync('/tmp/smc-storefront.js','utf8'),ctx);
+          function test(cart,code,expected,discount){vm.runInContext('shoppingCart='+JSON.stringify(cart)+';appliedCoupon='+JSON.stringify(code),ctx);let got=vm.runInContext('totalAmount()',ctx),d=vm.runInContext('couponDiscount()',ctx);if(Math.abs(got-expected)>0.001||Math.abs(d-discount)>0.001)throw new Error('unexpected total '+JSON.stringify({cart,code,got,d,expected,discount}));}
+          test({'P10-01':1},'PRIMEIRA10',897.30,99.70);
+          test({'P10-02':1,'LP01':1},'PRIMEIRA10',994.30,99.70);
+          test({'P10-01':1,'P10-02':1},'PRIMEIRA10',1794.60,199.40);
+          test({'P3-01':1,'LP01':1},'PRIMEIRA10',594,0);
+          test({'P10-01':1},'',997,0);
+          console.log('Five coupon/cart tests passed');
+          JS
+      - name: Commit updated storefront
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip
+          if ! git diff --cached --quiet; then
+            git commit -m "Enable PRIMEIRA10 in storefront Pix cart and totals"
+            git push
+          fi
