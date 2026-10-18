@@ -1,0 +1,27 @@
+name: Publish brand favicon
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/publish-favicon.yml"
+      - "apply_brand_favicon.py"
+      - "favicon64.b64"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  favicon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add favicon to public storefront ZIP
+        run: python3 apply_brand_favicon.py
+      - name: Save storefront changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish branded favicon in storefront"
+            git push
+          fi
