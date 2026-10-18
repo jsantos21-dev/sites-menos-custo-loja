@@ -1,0 +1,26 @@
+name: Fix storefront images
+on:
+  push:
+    branches: [main]
+    paths:
+      - "fix_catalog_images.py"
+      - ".github/workflows/fix-storefront-images.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add missing template thumbnails
+        run: python3 fix_catalog_images.py
+      - name: Commit patched storefront
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip
+          if ! git diff --cached --quiet; then
+            git commit -m "Fix 30 storefront product thumbnails"
+            git push
+          fi
