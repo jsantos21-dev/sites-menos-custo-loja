@@ -12,19 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect public storefront files without printing secrets
+      - name: Inspect pricing and checkout interactions
         run: |
           python3 - <<'PY'
           import zipfile,re
-          archive='Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip'
-          with zipfile.ZipFile(archive) as z:
-            print('FILES',[(x.filename,x.file_size) for x in z.infolist() if not x.is_dir()][:60])
-            names=z.namelist()
-            for name in [n for n in names if n.lower().endswith(('.html','.js','.json'))][:18]:
-              s=z.read(name).decode('utf-8','replace')
-              print('FILE',name,'SIZE',len(s))
-              if name.endswith('.html'):
-                print('BEGINHTML',s[:5000])
-              for match in list(re.finditer(r'997|497|297|197|97|checkout|carrinho|pix|pagamento|paylink',s,re.I))[:24]:
-                print('CONTEXT',name,match.start(),repr(s[max(0,match.start()-210):match.start()+310]))
+          with zipfile.ZipFile('Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip') as z:
+            s=z.read('index.html').decode('utf-8','replace')
+            print('ZIP FILES', len(z.namelist()),'HTML SIZE',len(s))
+            print('BODY_START',repr(s[s.find('<body'):s.find('<body')+2300]))
+            print('DOM IDS',re.findall(r'id="([^"]+)"',s)[:80])
+            for m in list(re.finditer(r'(?:R\$\s*997|997(?:[.,]00)?|P10|pix-dialog|pix-overlay|finalizar|solicitar|comprar|pedido)',s,re.I))[-48:]:
+              if m.start()<13000:continue
+              print('MATCH',m.start(),repr(s[max(0,m.start()-220):m.start()+420]))
+            p=s.rfind('<script')
+            print('LASTSCRIPT',p,repr(s[p:p+18500]))
           PY
