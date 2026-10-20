@@ -1,0 +1,31 @@
+name: Inspect public storefront checkout
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/inspect-public-storefront.yml"
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract public storefront HTML from ZIP
+        run: |
+          python3 - <<'PY'
+          from zipfile import ZipFile
+          with ZipFile("Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip") as z:
+              html=z.read("index.html").decode("utf-8")
+          with open("storefront-public-index.html","w") as f:
+              f.write(html)
+          PY
+      - name: Commit extracted public HTML for checkout migration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add storefront-public-index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Expose public storefront HTML for Cakto migration"
+            git push
+          fi
