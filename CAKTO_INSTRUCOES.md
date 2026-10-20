@@ -1,23 +1,25 @@
-# Migração Sites Menos Custo → Cakto
+# Sites Menos Custo — pagamentos oficiais pela Cakto
 
-O site atual tem **35 SKUs**: 30 modelos individuais e cinco pacotes. O arquivo `cakto-checkouts.json` já contém todos os IDs, mas os links públicos reais da Cakto ainda precisam ser preenchidos.
+## Estado da integração (20/10/2026)
 
-## Como concluir
+- Os 35 produtos do catálogo têm checkouts **diferentes**, fornecidos pelo proprietário da loja e registrados em `cakto-checkouts.json`.
+- O código do checkout está no arquivo `Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip`; a publicação no GitHub foi feita por `publish-cakto-checkouts.yml`.
+- O fluxo de compra do site agora permite um item por compra; o botão abre o checkout de seu respectivo SKU na Cakto (com `utm_source=sitesmenoscusto`).
+- O site não processa pagamentos e não solicita comprovante; os meios de pagamento e a confirmação ficam na Cakto.
+- O site **não garante entrega automática de ZIP**. Isso exige que o conteúdo correto esteja configurado na área de entrega do produto correspondente na Cakto.
+- O Google Drive da Sites Menos Custo possui 35 pastas com seus ZIPs, mas as permissões de acesso por link **não foram habilitadas nem verificadas**. Não publique links dos arquivos sem controle de acesso.
 
-1. Na Cakto, abra **Produtos → Ver links** (ou **Produto → Links**) e copie **o link de checkout da oferta**, não a URL do painel de administração.
-2. Preencha `checkouts` em `cakto-checkouts.json` com o URL de cada SKU. Cada checkout precisa corresponder ao produto/ZIP exato; não reaproveite um link para entregas diferentes.
-3. Configure a entrega de cada ZIP na Cakto para que só seja liberado após aprovação do pagamento.
-4. Crie/ative na Cakto o cupom privado **PRIMEIRA10**, com **10%** restrito às duas ofertas P10 (R$ 997 → R$ 897,30), e então altere `coupon_primeira10_enabled` para `true`.
-5. Faça o commit na branch `main`. O fluxo GitHub Actions `publish-cakto-checkouts.yml` testa a migração e atualiza o arquivo ZIP de produção **somente se todas as 35 URLs estiverem presentes e válidas**.
+## Cupom privado PRIMEIRA10
 
-## Comportamento após ativação
+O cupom de 10% é destinado somente a P10-01 (Biblioteca para Agências) e P10-02 (Negócios em Expansão), reduzindo R$ 997 para R$ 897,30. A Cakto aceita `?coupon=PRIMEIRA10` na URL do checkout, mas **o cupom ainda não foi verificado dentro do painel Cakto**.
 
-- O catálogo fica intacto, com compra individual por modelo/pacote.
-- O botão de pagamento leva diretamente à URL oficial `pay.cakto.com.br`, com rastreamento da origem.
-- A caixa de cupom continua discreta. Se o usuário inserir `PRIMEIRA10` em P10, o código vai à Cakto por `?coupon=PRIMEIRA10`.
-- Não aparece chave Pix manual, exigência de comprovante por e-mail nem a antiga etapa 'Já paguei'.
-- A Cakto processa o pagamento. Entrega de ZIP e recebimentos **precisam ser configurados e verificados na própria Cakto**; o site não comprova pagamento.
+Por segurança `coupon_primeira10_enabled` permanece `false` em `cakto-checkouts.json`, e o frontend não mostra nem simula desconto. Confirme as duas ofertas na Cakto antes de reabilitá-lo.
 
-**Status atual:** código e teste automatizado preparados, mas o ZIP publicado ainda não foi alterado porque faltam as 35 URLs e confirmação do cupom na Cakto.
+Referência: https://ajuda.cakto.com.br/pt-br/articles/61-como-usar-a-url-para-criar-um-checkout-pre-preenchido-na-cakto
 
-**Segurança:** nunca coloque token de API, senha, credencial do painel, informação bancária ou segredo neste JSON. Use apenas links públicos de checkout.
+## Manutenção e publicação
+
+- Os checkouts estão em `cakto-checkouts.json`; nunca insira senhas, tokens de API ou dados bancários neste arquivo público.
+- O arquivo `apply_cakto_checkout.py` migra o ZIP de publicação para Cakto, com validações dos 35 links.
+- `verify-cakto-storefront.yml` confere todos os links publicados, inspeciona o JavaScript e sincroniza o HTML em `storefront-public-index.html`.
+- A hospedagem da loja no Render depende da configuração do serviço e do build automático. **Uma atualização do GitHub não comprova por si só que o Render concluiu seu deploy.** Conferir separadamente no painel Render.
