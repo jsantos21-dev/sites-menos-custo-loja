@@ -1,0 +1,57 @@
+name: Prepare and publish Cakto checkout migration
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cakto-checkouts.json"
+      - "apply_cakto_checkout.py"
+      - ".github/workflows/publish-cakto-checkouts.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Python patcher
+        run: python3 -m py_compile apply_cakto_checkout.py
+      - name: Test checkout conversion with isolated dummy links
+        run: |
+          python3 - <<'PY'
+          import json, shutil, subprocess, tempfile, zipfile
+          from pathlib import Path
+          with tempfile.TemporaryDirectory() as name:
+              dest=Path(name)
+              shutil.copy2('apply_cakto_checkout.py',dest/'apply_cakto_checkout.py')
+              shutil.copy2('Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip',dest/'Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip')
+              conf=json.loads(Path('cakto-checkouts.json').read_text(encoding='utf-8'))
+              conf['coupon_primeira10_enabled']=True
+              conf['checkouts']={key:'https://pay.cakto.com.br/TEST%03d'%i for i,key in enumerate(conf['checkouts'],1)}
+              (dest/'cakto-checkouts.json').write_text(json.dumps(conf),encoding='utf-8')
+              subprocess.check_call(['python3','apply_cakto_checkout.py'],cwd=dest)
+              with zipfile.ZipFile(dest/'Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip') as z:
+                  assert z.testzip() is None
+                  html=z.read('index.html').decode('utf-8')
+              assert 'const CAKTO_CHECKOUTS=' in html
+              assert 'Pagar com segurança na Cakto' in html
+              assert 'Pagamento somente Pix' not in html
+              assert 'Prosseguir para o Pix' not in html
+              js=html.rsplit('<script>',1)[-1].split('</script>',1)[0]
+              (dest/'storefront.js').write_text(js,encoding='utf-8')
+              subprocess.check_call(['node','--check','storefront.js'],cwd=dest)
+              print('Validated Cakto patch on isolated fake checkouts, no dummy links published')
+          PY
+      - name: Apply only if all actual checkouts are configured
+        run: python3 apply_cakto_checkout.py
+      - name: Commit validated production ZIP only when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip
+          if ! git diff --cached --quiet; then
+            git commit -m "Switch storefront purchases from manual Pix to Cakto"
+            git push
+          else
+            echo "Storefront kept unchanged until all verified checkout links are provided."
+          fi
