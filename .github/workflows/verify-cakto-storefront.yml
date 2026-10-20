@@ -1,0 +1,57 @@
+name: Verify published Cakto storefront
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip"
+      - "cakto-checkouts.json"
+      - ".github/workflows/verify-cakto-storefront.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit 35 real checkout URLs and extract current HTML
+        run: |
+          python3 - <<'PY'
+          import json,re,zipfile
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          config=json.loads(Path('cakto-checkouts.json').read_text(encoding='utf-8'))
+          urls=config['checkouts']
+          assert len(urls)==35 and len(set(urls.values()))==35
+          for sku,url in urls.items():
+              info=urlsplit(url)
+              assert info.scheme=='https' and info.netloc=='pay.cakto.com.br' and info.path.strip('/'),sku
+          with zipfile.ZipFile('Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip') as z:
+              assert z.testzip() is None
+              html=z.read('index.html').decode('utf-8')
+          m=re.search(r'const CAKTO_CHECKOUTS=(\{[^;]+\});',html)
+          assert m is not None,"Production ZIP lacks the Cakto checkout mapping"
+          actual=json.loads(m.group(1))
+          assert actual==urls,"ZIP links differ from configured checkouts"
+          assert html.count('const CAKTO_COUPON_ENABLED=false')==1
+          assert 'function caktoCheckoutUrl(id)' in html
+          assert 'function startPayment()' in html
+          assert 'Pagar com segurança na Cakto' in html
+          assert 'Prosseguir para o Pix' not in html
+          assert 'Pagamento somente Pix' not in html
+          assert 'Já paguei · abrir e-mail' not in html
+          assert 'const SHOP_PRODUCTS=' in html
+          Path('storefront-public-index.html').write_text(html,encoding='utf-8')
+          Path('/tmp/cakto-storefront.js').write_text(html.rsplit('<script>',1)[-1].split('</script>',1)[0],encoding='utf-8')
+          print('Verified exactly 35 unique, official Cakto checkouts and no manual payment screen')
+          PY
+          node --check /tmp/cakto-storefront.js
+      - name: Commit latest verified site HTML
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add storefront-public-index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync verified HTML for 35 Cakto checkouts"
+            git push
+          fi
