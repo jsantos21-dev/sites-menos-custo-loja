@@ -215,7 +215,11 @@ def main():
  os.close(fd)
  try:
   with zipfile.ZipFile(temp,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as target:
-   for path,content in sorted(files.items()):target.writestr(path,content)
+   for path,content in sorted(files.items()):
+    info=zipfile.ZipInfo(path,date_time=(2026,10,20,0,0,0))
+    info.compress_type=zipfile.ZIP_DEFLATED
+    info.external_attr=(0o644<<16)
+    target.writestr(info,content,compress_type=zipfile.ZIP_DEFLATED,compresslevel=6)
   with zipfile.ZipFile(temp) as test:
    assert test.testzip() is None
    assert len([x for x in test.namelist() if x.startswith('produtos/') and x.endswith('.html')])==35
