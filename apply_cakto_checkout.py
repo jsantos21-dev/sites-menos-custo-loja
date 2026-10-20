@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Activate Cakto checkouts for every storefront SKU, only when fully configured.
 
-Atomic migration: without 35 real payment links and Cakto coupon enabled,
-do not modify the production ZIP or leave a mix of Cakto and manual Pix.
+Atomic migration: require 35 real payment links and never leave
+a mixed Cakto/manual-Pix checkout. Coupons activate only when explicitly enabled.
 """
 import json
 import os
@@ -49,10 +49,6 @@ def main():
         print("Cakto checkout NOT activated. Missing %s/%s links: %s" %
               (len(missing), len(products), ", ".join(missing)))
         return
-    if not config.get("coupon_primeira10_enabled"):
-        print("Cakto checkout NOT activated. Confirm PRIMEIRA10 at 10% for P10 packages in Cakto first.")
-        return
-
     normalized = {}
     for sku in products:
         url = checkouts[sku].strip()
@@ -65,7 +61,15 @@ def main():
         raise ValueError("Repeated checkout URL across SKUs: every delivered ZIP needs its own linked offer")
 
     html = replace_once(html, "const PIX_KEY=", MARKER +
-        json.dumps(normalized, ensure_ascii=False, separators=(",", ":")) + ";\nconst PIX_KEY=")
+        json.dumps(normalized, ensure_ascii=False, separators=(",", ":")) + ";\nconst CAKTO_COUPON_ENABLED=" +
+        json.dumps(bool(config.get("coupon_primeira10_enabled"))) + ";\nconst PIX_KEY=")
+    # Suppress the private coupon UI until the same 10% discount is active
+    # for P10-01 and P10-02 in Cakto (not just in the site's JavaScript).
+    html = replace_once(html,
+        "function couponDiscount(){if(appliedCoupon!=='PRIMEIRA10')",
+        "function couponDiscount(){if(!CAKTO_COUPON_ENABLED||appliedCoupon!=='PRIMEIRA10')")
+    html = replace_once(html, "function couponHtml(lines){",
+        "function couponHtml(lines){if(!CAKTO_COUPON_ENABLED)return '';")
 
     html = replace_once(html,
         "function addToCart(id){shoppingCart[id]=(shoppingCart[id]||0)+1;updateShop();checkoutStage=0;openCart();}",
@@ -90,7 +94,7 @@ def main():
  const base=CAKTO_CHECKOUTS[id];
  if(!base)return '';
  const url=new URL(base);
- if(appliedCoupon==='PRIMEIRA10'&&(id==='P10-01'||id==='P10-02'))url.searchParams.set('coupon','PRIMEIRA10');
+ if(CAKTO_COUPON_ENABLED&&appliedCoupon==='PRIMEIRA10'&&(id==='P10-01'||id==='P10-02'))url.searchParams.set('coupon','PRIMEIRA10');
  url.searchParams.set('utm_source','sitesmenoscusto');
  url.searchParams.set('utm_medium','site');
  return url.toString();
