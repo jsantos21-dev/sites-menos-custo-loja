@@ -24,3 +24,188 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #11a9
 @media(max-width:1000px){.v2-product-grid{grid-template-columns:1fr}.v2-product-info{position:static}.v2-footer-main{grid-template-columns:1fr 1fr}.v2-how-grid,.v2-proof-grid{grid-template-columns:1fr 1fr}.v2-banner-inner{align-items:flex-start;flex-direction:column}.nav-menu{gap:13px}}
 @media(max-width:700px){.sec{padding-top:57px;padding-bottom:57px}.v2-how-grid,.v2-proof-grid,.v2-footer-main{grid-template-columns:1fr}.v2-product-main{padding:35px 0 70px}.v2-product-info{padding:20px}.v2-cookie{left:10px;right:10px;bottom:10px;padding:17px}.v2-cookie-actions button{flex:1}.v2-preview-box{padding:11px}.nav-menu{gap:16px}.v2-legal{padding:40px 20px 80px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* SITES MENOS CUSTO — BLACK EDITION
+   Shared by the storefront, all 35 product detail pages and legal/cookie screens.
+   Put these theme tokens last: existing light-mode declarations remain the fallback. */
+:root{
+  color-scheme:dark;
+  --v2-ink:#f4f6fa;
+  --v2-navy:#000000;
+  --v2-green:#36e5a9;
+  --v2-blue:#70a6ff;
+  --v2-surface:#101215;
+  --v2-muted:#abb5c4;
+  --v2-border:#292e34;
+}
+html,body{background:#000;color:#f4f6fa}
+body{color:#f4f6fa}
+a{color:inherit}
+a:hover{color:#75f0bd}
+button,input,textarea,select{color:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline-color:#63edbd}
+::selection{background:#236e57;color:#fff}
+
+/* Header and mobile navigation */
+.notice-bar{background:#090b0d;color:#cdd6e2;border-bottom:1px solid #21272b}
+.notice-bar strong{color:#5bf2b5}
+.nav{background:#08090bef;border-bottom:1px solid #292c31;box-shadow:0 10px 40px #0009}
+.nav-menu,.nav-menu.open{background:transparent}
+.nav-menu>a:not(.btn){color:#e1e6ed}
+.nav-menu>a:not(.btn):hover,.nav-menu>a.v2-nav-ig{color:#67e8b5}
+.nav-menu a.btn{background:#19b787;color:#05100e;border-color:#19b787}
+.nav-menu a.btn:hover{background:#40d7a5;color:#04110c}
+.brand-text{color:#f5f8fb}
+.brand-text span{color:#5de7b0}
+.brand-text small{color:#a6b2c2}
+.nav-toggle{background:#171a1d;border:1px solid #33383e;color:#fff}
+.nav-menu a:focus-visible{outline-offset:4px}
+
+/* Hero: visually black instead of the old light blue / blue background */
+.hero{
+  background:
+    radial-gradient(ellipse at 85% 12%,rgba(25,76,65,.30) 0%,transparent 42%),
+    linear-gradient(125deg,#000 0%,#060809 70%,#080e0c 100%);
+  color:#fff;
+}
+.hero:before{opacity:.34}
+.hero h1{color:#fff}
+.hero h1 em{background:linear-gradient(95deg,#ecfff5,#57e5ab);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p,.hero .shop-note{color:#bcc7d5}
+.hero .pill{background:#0f251c;border:1px solid #27674c;color:#88f3c5}
+.hero-points{color:#d1d9e3}
+.hero-points b{color:#61e9af}
+.hero-sticker{background:#126747;color:#fff}
+.hero-shot{border-color:#22292a;box-shadow:0 24px 64px #000b}
+.btn{background:#208ede;color:#fff}
+.btn.white,.btn.outline{background:#111619;border:1px solid #405154;color:#e6f8f3}
+.btn.white:hover,.btn.outline:hover{background:#1b2926;box-shadow:0 9px 28px #0009;color:#fff}
+.btn.green{background:linear-gradient(115deg,#27d69e,#44e4ae);color:#042016;border-color:#28ba8f}
+.btn.green:hover{color:#041b15;box-shadow:0 14px 35px #088f6d33}
+
+/* Catalog, pricing, category search and all offer cards */
+.sec{background:#000;color:#f2f5f8}
+#precos{background:#000}
+#templates,#templates[style]{background:#030405!important}
+.sectop h2,.section-title{color:#f7f8fc}
+.sectop p{color:#a5b1c1}
+.kicker,.v2-kicker{color:#5ce4af}
+.pricing .pricecard,.pricecard{background:#111316;border:1px solid #2c3137;box-shadow:0 14px 32px #0008}
+.pricing .pricecard.special,.pricecard.special{background:linear-gradient(145deg,#11241e 0%,#111416 85%);border-color:#2b8668}
+.pricecard b{color:#eff3f8}
+.pricecard .pi{color:#79edbe}
+.pricecard .cost{color:#5beaaf}
+.pricecard small{color:#aebacc}
+.disc{background:#101419;border:1px solid #303c40;color:#b9c6d5}
+.seg button{background:#14181c;border:1px solid #323942;color:#bfc9d7}
+.seg button:hover{background:#1c2528;color:#fff}
+.seg button.active{background:#167e60;border-color:#3edcb0;color:#fff}
+.search,.filters input{background:#111519;border:1px solid #383f49;color:#f9fafb}
+.search::placeholder,.filters input::placeholder{color:#99a9b8;opacity:1}
+.empty{color:#a8b6c5}
+.card{background:#111316;border-color:#2d3339;box-shadow:0 12px 37px #0008}
+.card:hover{border-color:#317b60;box-shadow:0 18px 44px #000e}
+.card .cover,.cover{background:#151b1f}
+.card h3{color:#f4f8fc}
+.card p{color:#aab6c5}
+.card .sku,.sku{color:#96a6b8}
+.card .value,.value{color:#58e2aa}
+
+/* Packages */
+.packs{background:#07090b}
+.packs .sectop h2{color:#fff}
+.packs .sectop p{color:#b7c5d4}
+.packcard{background:#121719;border:1px solid #344540;box-shadow:0 15px 35px #0008}
+.packbody h3{color:#f7fafc}
+.packbody p,.packbody small{color:#bdc9d7}
+.pack-price{color:#6cebb5}
+.included b{background:#20332d;color:#c2efda}
+.packs .disc{background:#101919;border-color:#2b4540}
+
+/* How it works, benefits, trust and FAQ */
+.v2-simple-section{background:#050607}
+.v2-step{background:#121518;border:1px solid #30373d;box-shadow:0 12px 30px #0009}
+.v2-step h3{color:#edf3fa}
+.v2-step p{color:#afbccb}
+.v2-step-number{background:#173729;color:#78f4bd}
+.benefit{background:#111518;border:1px solid #2d343a}
+.benefit h3{color:#eef3f8}
+.benefit p{color:#aebac9}
+.benefit span{color:#51e3ac}
+.v2-proof{background:#000}
+.v2-proof-item{background:#121518;border:1px solid #30373d}
+.v2-proof-item b{color:#f6f8fc}
+.v2-proof-item p{color:#aeb9c8}
+.v2-proof-item a{color:#63e8b2;text-decoration:underline}
+.v2-banner{background:#0a1310;border-top:1px solid #214335;border-bottom:1px solid #214335}
+.v2-banner h2{color:#fff}
+.v2-banner p{color:#a9c9bd}
+.pix-section{background:#040707}
+.pix-info,.pix-steps{background:#111719;border:1px solid #274338}
+.pix-info h3,.pix-steps h3{color:#f4f8fa}
+.pix-info p,.pix-steps li,.pix-steps p{color:#b3bfcf}
+.faq{background:#050607;color:#eef3f8}
+.faq details{border-bottom:1px solid #30363b}
+.faq summary{color:#f4f6fa}
+.faq p{color:#afbbca}
+.faq a,.v2-legal a{color:#74dcb4}
+.numbers{background:#141619;box-shadow:0 20px 40px #0009}
+.metric{border-color:#343941}
+.metric b{color:#f3f7fa}
+.metric small{color:#a8b6c7}
+.footer{background:#040505;border-top:1px solid #252b2b;color:#c6d2df}
+.footer hr{border-color:#252c31}
+.v2-footer-main p{color:#afbdcc}
+.v2-footer-main nav a{color:#c4d1dc}
+.v2-footer-main h3{color:#91a7b8}
+.v2-footer-brand{color:#f7f8fa}
+.v2-footer-brand span{color:#69e9b3}
+.v2-cookie-link{color:#b9d5cc}
+
+/* 35 product pages and their info / previews */
+.v2-product-main{background:#000;color:#f5f7fa}
+.v2-breadcrumb{color:#b1bfd0}
+.v2-breadcrumb a{color:#7acbb4}
+.v2-preview-box{background:#101315;border:1px solid #30383a;box-shadow:0 22px 52px #000c}
+.v2-preview-main{background:#1b2327}
+.v2-thumb{background:#1b2225;color:#c8d3de;border-color:#3a4349}
+.v2-thumb[aria-pressed=true]{background:#11392b;border-color:#4fe7ae}
+.v2-thumb span{color:#f0f4f9}
+.v2-detail-panel,.v2-product-info{background:#111416;border-color:#2d3439;box-shadow:0 19px 60px #000b}
+.v2-detail-panel h2,.v2-product-info h1{color:#f5f8fa}
+.v2-product-desc,.v2-detail-panel p,.v2-detail-panel li{color:#b7c2cd}
+.v2-detail-panel a,.v2-product-info a:not(.v2-buy){color:#7be6bb}
+.v2-product-price{color:#65eeb6}
+.v2-chip{background:#17382c;color:#a6f7d3}
+.v2-buy{background:#19b885;color:#052118;box-shadow:0 13px 30px #000a}
+.v2-buy:hover{background:#42daa6;color:#052118}
+.v2-trust-line{color:#afbdc9}
+.v2-product-info hr{border-top-color:#343c40!important}
+
+/* Policies / terms, no unreadable dark-on-dark copy */
+.v2-legal{background:#000;color:#f3f7fb}
+.v2-legal h1,.v2-legal h2{color:#f6f9fc}
+.v2-legal p,.v2-legal li{color:#b8c4d0}
+.v2-legal a{color:#77e7ba}
+
+/* Consent is also dark, but buttons and toggles stay accessible */
+.v2-cookie{background:#111517;border:1px solid #405047;color:#f8fafc;box-shadow:0 26px 80px #000e}
+.v2-cookie h2,.v2-cookie-panel h2{color:#f7fafc}
+.v2-cookie p,.v2-cookie-panel p{color:#b9c7d4}
+.v2-cookie a{color:#74eabc!important}
+.v2-cookie-actions button{background:#1d2527;color:#f0f5f7;border:1px solid #49545b}
+.v2-cookie-actions button:hover{background:#293b38}
+.v2-cookie-actions button.v2-accept{background:#19ad7c;border-color:#28cb9a;color:#071b13}
+.v2-cookie-panel{background:#111517;color:#f1f6fa;border:1px solid #495054}
+.v2-cookie-dialog{background:#000d}
+.v2-cookie-toggle{border-color:#343d40}
+.v2-cookie-toggle b{color:#f6f8fa}
+.v2-cookie-toggle small{color:#b4c2cf}
+.v2-cookie-toggle input{accent-color:#3de8ae}
+@media(max-width:950px){
+  .nav-menu,.nav-menu.open{background:#101416;border:1px solid #2e363a;box-shadow:0 20px 45px #000c}
+}
+@media(max-width:700px){
+  .nav-menu,.nav-menu.open{background:#101416}
+}
