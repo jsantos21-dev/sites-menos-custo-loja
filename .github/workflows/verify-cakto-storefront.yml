@@ -5,6 +5,7 @@ on:
     paths:
       - "Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip"
       - "cakto-checkouts.json"
+      - "tidy_cakto_nav.py"
       - ".github/workflows/verify-cakto-storefront.yml"
   workflow_dispatch:
 permissions:
@@ -14,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Remove obsolete Pix and order navigation from production ZIP
+        run: |
+          python3 -m py_compile tidy_cakto_nav.py
+          python3 tidy_cakto_nav.py
       - name: Audit 35 real checkout URLs and extract current HTML
         run: |
           python3 - <<'PY'
@@ -38,6 +43,11 @@ jobs:
           assert 'function startPayment()' in html
           assert 'Pagar com segurança na Cakto' in html
           assert 'Prosseguir para o Pix' not in html
+          assert 'Meu pedido' not in html
+          assert 'Pagamento Pix' not in html
+          assert 'id="cart-trigger"' not in html
+          assert 'id="floating-cart"' not in html
+          assert 'function addToCart(id)' in html
           assert 'Pagamento somente Pix' not in html
           assert 'Já paguei · abrir e-mail' not in html
           assert 'const SHOP_PRODUCTS=' in html
@@ -50,8 +60,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add storefront-public-index.html
+          git add Sites_Menos_Custo_REPOSITORIO_PARA_RENDER.zip storefront-public-index.html
           if ! git diff --cached --quiet; then
-            git commit -m "Sync verified HTML for 35 Cakto checkouts"
+            git commit -m "Remove obsolete navigation and sync Cakto storefront"
             git push
           fi
