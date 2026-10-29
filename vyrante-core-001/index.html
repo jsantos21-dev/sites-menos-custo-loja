@@ -118,6 +118,8 @@ body{overflow-wrap:break-word}
   .category-tile img{right:-12%}
 }
 
+/* Mobile editorial heading refinement */
+@media(max-width:790px){.story-band h2{font-size:clamp(40px,10.5vw,58px);line-height:.96;letter-spacing:0;overflow-wrap:normal;word-break:normal}.story-band{padding:57px 0}.story-band p:not(.eyebrow){font-size:13px;line-height:1.7}.card-kicker{line-height:1.5}}
 /* Timed display modes, owner-controlled */
 #vyranteMode{position:fixed;inset:0;z-index:9999;overflow-y:auto;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 12%,#23302a 0%,#0e1110 42%,#080909 100%);color:#edf1ec;text-align:center}
 #vyranteMode[hidden]{display:none!important}
