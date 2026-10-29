@@ -1,0 +1,348 @@
+[
+  {
+    "id": "compression-tee",
+    "title": "FORM Compression Tee",
+    "type": "Compressão manga curta",
+    "gender": "masculino",
+    "line": "performance",
+    "price": 129,
+    "color": "Preto profundo",
+    "hex": "#111313",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Slim fit anatômico",
+    "material": "Malha de toque esportivo. Composição final será informada no lançamento.",
+    "description": "Corte justo e recortes anatômicos. Desenvolvida para valorizar o movimento sem excesso de informação visual.",
+    "tags": [
+      "Compressão",
+      "Treino de força",
+      "Manga curta"
+    ],
+    "feature": "Cortes anatômicos, acabamento discreto e aplicação flexível da identidade VYRANTE.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "oversized-tee",
+    "title": "FORM Oversized Tee",
+    "type": "Camiseta oversized",
+    "gender": "unissex",
+    "line": "form",
+    "price": 139,
+    "color": "Preto profundo",
+    "hex": "#141414",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Oversized / boxy",
+    "material": "Malha encorpada. Composição final será informada no lançamento.",
+    "description": "O volume certo para o treino, aquecimento ou rotina. Ombros caídos, gola estruturada e assinatura VYRANTE nas costas.",
+    "tags": [
+      "Oversized",
+      "Pump cover",
+      "Lifestyle"
+    ],
+    "feature": "Modelagem boxy, gola reforçada e estampa minimalista.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "training-shorts",
+    "title": "FLEX Training Shorts",
+    "type": "Shorts de treino",
+    "gender": "masculino",
+    "line": "performance",
+    "price": 119,
+    "color": "Preto profundo",
+    "hex": "#111313",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Regular athletic",
+    "material": "Tecido leve. Composição final será informada no lançamento.",
+    "description": "Movimento livre, cintura ajustável e linhas limpas para combinar com compressão ou oversized.",
+    "tags": [
+      "Shorts",
+      "Treino",
+      "Mobilidade"
+    ],
+    "feature": "Cós elástico, cordão ajustável e bolsos laterais.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "sculpt-bra",
+    "title": "SCULPT Training Bra",
+    "type": "Top fitness",
+    "gender": "feminino",
+    "line": "performance",
+    "price": 119,
+    "color": "Oliva mineral",
+    "hex": "#414737",
+    "sizes": [
+      "PP",
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Ajustado / suporte moderado",
+    "material": "Malha elástica com forro. Composição final será informada no lançamento.",
+    "description": "Desenho essencial com alças firmes e estrutura confortável para treinos de intensidade moderada.",
+    "tags": [
+      "Top",
+      "Conjunto",
+      "Feminino"
+    ],
+    "feature": "Alças largas, base estruturada e visual minimalista.",
+    "visible": true,
+    "inventory": {
+      "PP": 0,
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "sculpt-legging",
+    "title": "SCULPT High Waist Legging",
+    "type": "Legging cintura alta",
+    "gender": "feminino",
+    "line": "performance",
+    "price": 169,
+    "color": "Preto profundo",
+    "hex": "#111313",
+    "sizes": [
+      "PP",
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Cintura alta / ajuste anatômico",
+    "material": "Malha elástica. Composição final será informada no lançamento.",
+    "description": "Uma silhueta limpa e funcional com cós alto e recortes discretos.",
+    "tags": [
+      "Legging",
+      "Conjunto",
+      "Treino"
+    ],
+    "feature": "Cintura alta, cós estruturado e recortes anatômicos.",
+    "visible": true,
+    "inventory": {
+      "PP": 0,
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "longsleeve",
+    "title": "FORM Compression Long Sleeve",
+    "type": "Compressão manga longa",
+    "gender": "masculino",
+    "line": "performance",
+    "price": 149,
+    "color": "Oliva mineral",
+    "hex": "#414737",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Slim fit anatômico",
+    "material": "Malha de toque esportivo. Composição final será informada no lançamento.",
+    "description": "Proteção leve e liberdade de movimento para os dias de treino mais frios.",
+    "tags": [
+      "Compressão",
+      "Manga longa",
+      "Treino"
+    ],
+    "feature": "Costuras anatômicas e mangas ajustadas.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "pump-tank",
+    "title": "FORM Pump Tank",
+    "type": "Regata de treino",
+    "gender": "unissex",
+    "line": "form",
+    "price": 109,
+    "color": "Preto profundo",
+    "hex": "#111313",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Amplo / cavas largas",
+    "material": "Malha leve e confortável.",
+    "description": "Uma peça direta para liberdade de movimento, com shape amplo e presença discreta.",
+    "tags": [
+      "Regata",
+      "Pump cover",
+      "Oversized"
+    ],
+    "feature": "Cavas amplas e contorno limpo.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "biker-short",
+    "title": "SCULPT Biker Short",
+    "type": "Shorts biker feminino",
+    "gender": "feminino",
+    "line": "performance",
+    "price": 119,
+    "color": "Oliva mineral",
+    "hex": "#414737",
+    "sizes": [
+      "PP",
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Cintura alta / biker",
+    "material": "Malha de poliamida com elastano, proposta de 250–290 g/m².",
+    "description": "Modelagem ajustada e versátil com recortes suaves e cós alto.",
+    "tags": [
+      "Biker",
+      "Feminino",
+      "Treino"
+    ],
+    "feature": "Cós alto e costuras de visual discreto.",
+    "visible": true,
+    "inventory": {
+      "PP": 0,
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "heavy-hoodie",
+    "title": "RECOVERY Heavy Hoodie",
+    "type": "Moletom oversized",
+    "gender": "unissex",
+    "line": "recovery",
+    "price": 249,
+    "color": "Preto profundo",
+    "hex": "#111313",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Oversized estruturado",
+    "material": "Moletom estruturado.",
+    "description": "Camadas para antes e depois de treinar. Capuz estruturado e volumes equilibrados.",
+    "tags": [
+      "Moletom",
+      "Recovery",
+      "Lifestyle"
+    ],
+    "feature": "Punhos firmes, tecido encorpado e bordado discreto.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  },
+  {
+    "id": "zip-jacket",
+    "title": "RECOVERY Zip Jacket",
+    "type": "Jaqueta de treino",
+    "gender": "unissex",
+    "line": "recovery",
+    "price": 279,
+    "color": "Preto profundo",
+    "hex": "#111313",
+    "sizes": [
+      "P",
+      "M",
+      "G",
+      "GG"
+    ],
+    "fit": "Regular athletic",
+    "material": "Tecido esportivo de toque macio.",
+    "description": "Do treino à rua, uma camada minimalista com gola alta e zíper frontal.",
+    "tags": [
+      "Jaqueta",
+      "Recovery",
+      "Lifestyle"
+    ],
+    "feature": "Gola estruturada, bolsos funcionais e acabamentos limpos.",
+    "visible": true,
+    "inventory": {
+      "P": 0,
+      "M": 0,
+      "G": 0,
+      "GG": 0
+    },
+    "images": [],
+    "status": "Em breve"
+  }
+]
