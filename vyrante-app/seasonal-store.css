@@ -213,3 +213,24 @@ body:is(.vyrant-christmas,.vyrant-newyear) .seasonal-sky{display:block}
  .seasonal-sky,.seasonal-sky *{display:none!important;animation:none!important}
  body:is(.vyrant-christmas,.vyrant-newyear) :is(.product-card,.category-tile){transition:none}
 }
+
+/* Elegant, CSS-only New Year fireworks (no canvas or external assets). */
+.seasonal-firework{
+ position:absolute;left:var(--fx);top:var(--fy);height:170px;width:170px;pointer-events:none;
+ transform:translate(-50%,-50%);animation:fireworkGlint 5.5s ease-out infinite;
+ animation-delay:var(--fd);opacity:0;
+ background:repeating-conic-gradient(from 2deg,#ffdd8b 0deg 4deg,transparent 5deg 30deg);
+ -webkit-mask:radial-gradient(circle,transparent 0 9%,#000 11% 13%,transparent 15% 33%,#000 35% 37%,transparent 39%);
+ mask:radial-gradient(circle,transparent 0 9%,#000 11% 13%,transparent 15% 33%,#000 35% 37%,transparent 39%);
+ filter:drop-shadow(0 0 18px #ffe2a2);
+}
+.seasonal-firework:nth-of-type(even){
+ background:repeating-conic-gradient(#e6d9ff 0deg 4deg,transparent 5deg 26deg);
+}
+@keyframes fireworkGlint{
+ 0%,9%{opacity:0;transform:translate(-50%,-50%) scale(.1)}
+ 20%,32%{opacity:.95;transform:translate(-50%,-50%) scale(1)}
+ 52%,100%{opacity:0;transform:translate(-50%,-50%) scale(1.4)}
+}
+@media(max-width:790px){.seasonal-firework{width:105px;height:105px}}
+@media(prefers-reduced-motion:reduce){.seasonal-firework{display:none!important}}
