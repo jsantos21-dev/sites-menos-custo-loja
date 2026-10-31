@@ -102,11 +102,11 @@
     const screen=el("div","seasonal-intro seasonal-intro-"+type);
     screen.id="vyrant-season-intro";
     screen.setAttribute("role","dialog");
-    screen.setAttribute("aria-label",christmas?"Boas-vindas à edição de Natal":"Boas-vindas à edição de Ano Novo");
+    screen.setAttribute("aria-label",d.aria||(christmas?"Boas-vindas à edição de Natal":"Boas-vindas à edição de Ano Novo"));
     const lights=el("div","seasonal-intro-lights");
     lights.setAttribute("aria-hidden","true");
     for(let i=0;i<(MEDIA?0:14);i++){
-      const sparkle=el("span",christmas?"seasonal-intro-flake":"seasonal-intro-spark",christmas?(i%4?"❄":"✦"):"✧");
+      const sparkle=el("span",christmas?"seasonal-intro-flake":"seasonal-intro-spark",d.particle||(christmas?(i%4?"❄":"✦"):"✧"));
       sparkle.style.setProperty("--x",((i*29.7)%96)+"%");
       sparkle.style.setProperty("--delay",(-i*.43)+"s");
       sparkle.style.setProperty("--duration",(5+i%6)+"s");
@@ -114,7 +114,7 @@
     }
     screen.append(lights);
     const panel=el("div","seasonal-intro-panel");
-    const badge=el("span","seasonal-intro-badge",christmas?"HOLIDAY SEASON / 2026":"NEW YEAR / 2027");
+    const badge=el("span","seasonal-intro-badge",d.introBadge||(christmas?"HOLIDAY SEASON / 2026":"NEW YEAR / 2027"));
     panel.append(badge);
     const logo=el("div","seasonal-intro-logo");
     const storeLogo=document.querySelector(".brand img")||document.querySelector("#modeLogo");
@@ -124,11 +124,11 @@
       brand.alt="VYRANT";
       logo.append(brand);
     }else logo.textContent="VYRANT";
-    logo.append(el("span","seasonal-intro-logo-detail",christmas?"🎅":"✦"));
+    logo.append(el("span","seasonal-intro-logo-detail",d.introSymbol||(christmas?"🎅":"✦")));
     panel.append(logo);
-    panel.append(el("div","seasonal-intro-divider",christmas?"✧  NATAL VYRANT  ✧":"✧  UM NOVO CICLO  ✧"));
-    panel.append(el("h1","seasonal-intro-title",christmas?"UM NATAL PARA EVOLUIR.":"UM NOVO ANO. UMA NOVA VERSÃO."));
-    panel.append(el("p","seasonal-intro-copy",christmas?"O espírito do Natal encontra a performance. Descubra a VYRANT em uma experiência de fim de ano.":"Celebre novas conquistas e novos movimentos. Bem-vindo à edição especial de Ano Novo da VYRANT."));
+    panel.append(el("div","seasonal-intro-divider",d.introDivider||(christmas?"✧  NATAL VYRANT  ✧":"✧  UM NOVO CICLO  ✧")));
+    panel.append(el("h1","seasonal-intro-title",d.introTitle||(christmas?"UM NATAL PARA EVOLUIR.":"UM NOVO ANO. UMA NOVA VERSÃO.")));
+    panel.append(el("p","seasonal-intro-copy",d.introCopy||(christmas?"O espírito do Natal encontra a performance. Descubra a VYRANT em uma experiência de fim de ano.":"Celebre novas conquistas e novos movimentos. Bem-vindo à edição especial de Ano Novo da VYRANT.")));
     const enter=el("button","seasonal-intro-enter","EXPLORAR A LOJA");
     enter.type="button";
     enter.addEventListener("click",()=>closeIntro(false),{once:true});
