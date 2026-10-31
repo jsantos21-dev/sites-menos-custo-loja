@@ -1,0 +1,30 @@
+/* VYRANTE product gallery — usable with touch, mouse, keyboard and all six themes. */
+.pdp-gallery{min-width:0;align-items:start}
+.vy-photo-frame{position:relative;min-width:0;width:100%;aspect-ratio:4/5;overflow:hidden;background:#101312;border:1px solid #343d38}
+.vy-photo-track{display:flex;width:100%;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.vy-photo-track::-webkit-scrollbar{display:none}
+.vy-photo-track:focus-visible{outline:2px solid #cadacb;outline-offset:-2px}
+.vy-photo-slide{flex:0 0 100%;min-width:0;height:100%;scroll-snap-align:center;scroll-snap-stop:always}
+.vy-photo-slide img{display:block;width:100%;height:100%;object-fit:cover}
+.vy-photo-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:39px;height:46px;display:grid;place-items:center;background:rgba(8,14,12,.66);border:1px solid rgba(255,255,255,.4);color:#fff;cursor:pointer;font:32px/1 Arial,sans-serif;backdrop-filter:blur(7px);transition:background .2s}
+.vy-photo-arrow:hover{background:rgba(8,14,12,.92)}
+.vy-photo-arrow.prev{left:11px}.vy-photo-arrow.next{right:11px}
+.vy-photo-count{position:absolute;bottom:12px;right:12px;padding:7px 11px;background:rgba(0,0,0,.69);color:white;font:700 11px system-ui;letter-spacing:.1em;border-radius:50px;pointer-events:none}
+.vy-photo-thumbs{display:flex;flex-direction:column;gap:9px;max-height:min(74vh,640px);overflow-y:auto;scrollbar-width:thin}
+.vy-thumb{display:block;aspect-ratio:1;background:#1a1c1b;border:1px solid #434e46;padding:0;cursor:pointer;overflow:hidden;min-height:74px;flex-shrink:0}
+.vy-thumb.is-active{border:2px solid #d0dfc9;outline:1px solid rgba(255,255,255,.4)}
+.vy-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.vy-thumb:focus-visible{outline:2px solid #e3e7e2;outline-offset:2px}
+.vy-qty-wrap{margin:24px 0 15px;display:grid;grid-template-columns:1fr auto;gap:8px 10px;align-items:center}
+.vy-qty-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
+.vy-qty-hint{font-size:11px;color:#a5b3a6;text-align:right}
+.vy-quantity{grid-column:1/-1;display:inline-flex;width:fit-content;align-items:center;border:1px solid #677669;min-height:47px}
+.vy-qty-button{display:grid;place-items:center;width:47px;height:47px;background:transparent;border:0;color:inherit;font-size:22px;cursor:pointer}
+.vy-qty-button:disabled{opacity:.32;cursor:not-allowed}
+.vy-qty-button:focus-visible{outline:2px solid #e4eddb;outline-offset:-3px}
+.vy-qty-input{appearance:textfield!important;-moz-appearance:textfield!important;border:0!important;border-left:1px solid #526257!important;border-right:1px solid #526257!important;background:transparent!important;color:inherit!important;text-align:center;width:65px;min-height:45px!important;font:700 15px system-ui!important;padding:0!important}
+.vy-qty-input::-webkit-inner-spin-button,.vy-qty-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) :is(.vy-photo-frame,.vy-thumb,.vy-quantity){border-color:var(--season-border)!important}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) .vy-thumb.is-active{border-color:var(--season-metal)!important}
+@media(max-width:750px){.pdp-gallery:has(.vy-photo-frame){display:flex;flex-direction:column;gap:10px}.vy-photo-frame{width:100%;aspect-ratio:4/5}.vy-photo-thumbs{width:100%;max-height:none;overflow-x:auto;overflow-y:hidden;flex-direction:row;padding:3px 2px 7px;scroll-snap-type:x mandatory}.vy-thumb{min-width:70px;width:74px;height:74px;min-height:0;scroll-snap-align:start}.vy-qty-wrap{margin-top:20px}.vy-photo-arrow{width:33px;height:40px}}
+@media(prefers-reduced-motion:reduce){.vy-photo-track{scroll-behavior:auto}.vy-photo-arrow{transition:none}}
