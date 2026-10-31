@@ -1,11 +1,11 @@
-/* VYRANT · Seasonal Storefront · Christmas 2026 / New Year 2027
+/* VYRANTE · Seasonal Storefront · Christmas 2026 / New Year 2027
    Full storefront theming; original appearance is untouched unless an event is active. */
 body.vyrant-christmas{
  --season-bg:#0c1511;--season-panel:#14241b;--season-panel2:#251b1b;
  --season-primary:#a52434;--season-secondary:#174c39;--season-metal:#e8cb96;
  --season-text:#fbf3e7;--season-muted:#d2c6b4;
  --season-border:rgba(232,203,150,.38);--season-shadow:rgba(136,19,44,.22);
- --season-display:"CHRISTMAS • VYRANT";
+ --season-display:"CHRISTMAS • VYRANTE";
  background:#0a100e;color:var(--season-text);
 }
 body.vyrant-newyear{
@@ -13,7 +13,7 @@ body.vyrant-newyear{
  --season-primary:#6f5693;--season-secondary:#101d34;--season-metal:#f3d48d;
  --season-text:#fcf6eb;--season-muted:#c5c2d1;
  --season-border:rgba(243,212,141,.34);--season-shadow:rgba(133,109,172,.19);
- --season-display:"NEW YEAR • VYRANT";
+ --season-display:"NEW YEAR • VYRANTE";
  background:#080c16;color:var(--season-text);
 }
 body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter){
@@ -377,7 +377,7 @@ body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.
 
 
 /* ==============================================================
-   2026–2027 / THREE MORE OFFICIAL VYRANT EXPERIENCES
+   2026–2027 / THREE MORE OFFICIAL VYRANTE EXPERIENCES
    The original, Christmas and New Year CSS remains unchanged.
    ============================================================== */
 body.vyrant-valentines {
@@ -385,21 +385,21 @@ body.vyrant-valentines {
  --season-primary:#a63a65;--season-secondary:#592741;--season-metal:#f4cbd2;
  --season-text:#fff3f4;--season-muted:#e8c8d3;
  --season-border:rgba(244,203,210,.35);--season-shadow:rgba(223,69,131,.19);
- --season-display:"LOVE • VYRANT";background:#160d13;color:var(--season-text);
+ --season-display:"LOVE • VYRANTE";background:#160d13;color:var(--season-text);
 }
 body.vyrant-halloween {
  --season-bg:#0c0a13;--season-panel:#191123;--season-panel2:#2c1831;
  --season-primary:#a74b12;--season-secondary:#362047;--season-metal:#ffc07c;
  --season-text:#fcf4e8;--season-muted:#cfc2da;
  --season-border:rgba(255,174,101,.32);--season-shadow:rgba(196,91,19,.23);
- --season-display:"HALLOWEEN • VYRANT";background:#080711;color:var(--season-text);
+ --season-display:"HALLOWEEN • VYRANTE";background:#080711;color:var(--season-text);
 }
 body.vyrant-easter {
  --season-bg:#13201d;--season-panel:#20342b;--season-panel2:#343547;
  --season-primary:#785c9f;--season-secondary:#2d624b;--season-metal:#efdcba;
  --season-text:#f8f4e9;--season-muted:#e0dccd;
  --season-border:rgba(229,213,243,.35);--season-shadow:rgba(160,119,191,.2);
- --season-display:"EASTER • VYRANT";background:#101a15;color:var(--season-text);
+ --season-display:"EASTER • VYRANTE";background:#101a15;color:var(--season-text);
 }
 
 /* Seasonal logo emblems follow the customer through product detail and cart. */
