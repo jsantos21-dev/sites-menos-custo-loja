@@ -17,7 +17,7 @@ function enhance(){
  createCarousel(gallery,p,photos);createQuantity(info,p);
 }
 function createCarousel(gallery,p,photos){
- gallery.replaceChildren();
+ gallery.replaceChildren();gallery.classList.add("vy-ready");
  gallery.dataset.vySignature=p.id+"|"+photos.join("|");
  gallery.dataset.vyCurrent="0";
  var frame=element("div","vy-photo-frame"),track=element("div","vy-photo-track");track.id="vyPhotoTrack";
