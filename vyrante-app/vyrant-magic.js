@@ -13,6 +13,8 @@ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const gust={x:-9999,y:-9999,power:0,time:0};
 let storeField=null,screenField=null,storeTheme=null,screenTheme=null;
 let audio=null,muted=true,melodyTimer=null,noteIndex=0;
+let enabledThemes={christmas:true,newyear:true,valentines:true,halloween:true,easter:true};
+const isMusicEnabled=theme=>!!themes[theme]&&enabledThemes[theme]!==false;
 const make=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el;};
 function pushWind(x,y,power){gust.x=x;gust.y=y;gust.power=power;gust.time=performance.now();}
 addEventListener("pointermove",e=>pushWind(e.clientX,e.clientY,e.pointerType==="touch"?12:6),{passive:true});
@@ -182,7 +184,7 @@ function stopMusic(){
 function startAudio(){
  if(muted)return;
  const theme=screenTheme||storeTheme;
- if(!theme||!SCORES[theme]){stopMusic();return;}
+ if(!theme||!SCORES[theme]||!isMusicEnabled(theme)){stopMusic();return;}
  try{
   if(!audio){
    const Audio=window.AudioContext||window.webkitAudioContext;
@@ -215,6 +217,7 @@ function setAudioButtonLabels(){
  });
 }
 function toggleAudio(){
+ if(!isMusicEnabled(screenTheme||storeTheme))return;
  muted=!muted;
  if(muted){stopMusic();}
  else startAudio();
@@ -229,12 +232,43 @@ function audioButton(where,mode){
  return button;
 }
 document.addEventListener("click",e=>{
- if(muted||e.target.closest(".vyrant-audio-button"))return;
+ if(muted||!isMusicEnabled(screenTheme||storeTheme)||e.target.closest(".vyrant-audio-button"))return;
  if(e.target.closest("button,a,[role='button'],select,input[type='checkbox']")){
   const theme=screenTheme||storeTheme;
   if(theme&&themes[theme])sound(themes[theme].tune[(++noteIndex)%themes[theme].tune.length]+12,.085,.011,themes[theme].wave);
  }
 },true);
+function refreshMusicControls(){
+ const active=screenTheme||storeTheme;
+ if(!isMusicEnabled(active)){
+  muted=true;stopMusic();
+  document.querySelector("#vyrant-store-audio")?.remove();
+  document.querySelector(".vyrant-screen-audio-slot")?.remove();
+ }
+ if(storeTheme&&isMusicEnabled(storeTheme)&&!document.querySelector("#vyrant-store-audio")){
+  const box=make("div","vyrant-store-music");box.id="vyrant-store-audio";
+  audioButton(box,"store");document.body.append(box);
+ }
+ if(storeTheme&&!isMusicEnabled(storeTheme))document.querySelector("#vyrant-store-audio")?.remove();
+ const root=document.querySelector("#vyranteMode");
+ if(screenTheme&&isMusicEnabled(screenTheme)&&root?.querySelector(".mode-panel")&&!root.querySelector(".vyrant-screen-audio-slot")){
+  const slot=make("div","vyrant-screen-audio-slot");
+  audioButton(slot,"screen");root.querySelector(".mode-panel").append(slot);
+ }
+ if(screenTheme&&!isMusicEnabled(screenTheme))root?.querySelector(".vyrant-screen-audio-slot")?.remove();
+ setAudioButtonLabels();
+}
+function setMusicSettings(config){
+ const next={};
+ for(const theme of Object.keys(themes))next[theme]=config?.[theme]!==false;
+ const oldActive=isMusicEnabled(screenTheme||storeTheme);
+ enabledThemes=next;
+ if(oldActive&&!isMusicEnabled(screenTheme||storeTheme)){
+  muted=true;stopMusic();
+  if(audio&&audio.state==="running")audio.suspend().catch(()=>{});
+ }
+ refreshMusicControls();
+}
 function stopStore(){
  if(storeField){storeField.stop();storeField=null;}
  document.querySelector("#vyrant-store-audio")?.remove();
@@ -245,28 +279,27 @@ function activateStore(theme){
  if(!themes[theme])return;
  storeTheme=theme;
  storeField=new Field(document.body,theme,false);
- const box=make("div","vyrant-store-music");box.id="vyrant-store-audio";audioButton(box,"store");
- document.body.append(box);
- if(!muted)startAudio();
+ refreshMusicControls();
+ if(!muted&&isMusicEnabled(screenTheme||storeTheme))startAudio();
 }
 function updateScreen(m){
  const root=document.querySelector("#vyranteMode");if(!root)return;
  const current=m&&m.type!=="normal"?m.type:null;
  const theme=current&&themes[m.eventTheme]?m.eventTheme:null;
  const key=current+":"+(theme||"neutral");
- if(root.dataset.magicKey===key)return;
+ if(root.dataset.magicKey===key){refreshMusicControls();return;}
  root.dataset.magicKey=key;
  for(const name of Object.keys(themes))root.classList.remove("vyrant-screen-"+name);
  if(screenField){screenField.stop();screenField=null;}
  root.querySelector(".vyrant-screen-audio-slot")?.remove();
  screenTheme=theme;
- if(!current){root.removeAttribute("data-access-mode");if(!muted&&storeTheme)startAudio();return;}
+ if(!current){root.removeAttribute("data-access-mode");refreshMusicControls();if(!muted&&isMusicEnabled(storeTheme))startAudio();return;}
  root.dataset.accessMode=current;
  if(theme){
   root.classList.add("vyrant-screen-"+theme);
   screenField=new Field(root,theme,true);
   const panel=root.querySelector(".mode-panel");
-  if(panel){
+  if(panel&&isMusicEnabled(theme)){
    const slot=make("div","vyrant-screen-audio-slot");
    audioButton(slot,"screen");panel.append(slot);
   }
@@ -277,14 +310,15 @@ function updateScreen(m){
   const label=current==="maintenance"?"MANUTENÇÃO":current==="launch"?"NOVO LANÇAMENTO":"EVENTO";
   eyebrow.textContent="VYRANTE / "+label+(theme?" · "+themes[theme].label.toUpperCase():"");
  });
- if(!muted)startAudio();
+ refreshMusicControls();
+ if(!muted&&isMusicEnabled(screenTheme||storeTheme))startAudio();
 }
-window.VyrantMagic={activateStore,stopStore,updateScreen,playClick:()=>{}};
+window.VyrantMagic={activateStore,stopStore,updateScreen,setMusicSettings,playClick:()=>{}};
 window.VyrantScreens={update:updateScreen};
 function verifyInitialScreen(){
  fetch("/api/public",{cache:"no-store"})
  .then(r=>r.ok?r.json():null)
- .then(data=>{if(data?.mode)updateScreen(data.mode);})
+ .then(data=>{if(data?.musicThemes)setMusicSettings(data.musicThemes);if(data?.mode)updateScreen(data.mode);})
  .catch(()=>{});
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",verifyInitialScreen,{once:true});
