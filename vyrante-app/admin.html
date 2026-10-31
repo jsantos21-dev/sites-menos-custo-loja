@@ -37,8 +37,124 @@ html,body{max-width:100%;overflow-x:hidden!important}*,*:before,*:after{box-sizi
 .music-toggle input:checked+.music-slider::after{transform:translateX(17px);background:#fff}
 .music-toggle input:focus-visible+.music-slider{outline:2px solid white;outline-offset:3px}
 @media(max-width:770px){.event-music-grid{grid-template-columns:1fr}.event-music-heading{align-items:flex-start;flex-direction:column}.audio-optin-note{white-space:normal}}
+
+/* VYRANTE ADMIN LOGIN — original editorial brand identity, no external assets. */
+.login-wrap{
+ display:grid;place-items:center;position:relative;isolation:isolate;
+ min-height:100dvh;min-height:100svh;overflow:hidden;
+ padding:clamp(18px,3vw,48px)!important;
+ background:
+  radial-gradient(ellipse 80% 100% at 14% 80%,#2940349c 0,transparent 67%),
+  radial-gradient(ellipse 70% 78% at 96% 8%,#6579632b 0,transparent 72%),
+  linear-gradient(135deg,#09110d 0%,#141d18 42%,#080d0b 100%);
+}
+.login-wrap[hidden]{display:none!important}
+.login-wrap::before{
+ content:"VYRANTE";pointer-events:none;user-select:none;
+ position:absolute;left:-2vw;bottom:-.18em;z-index:-1;
+ white-space:nowrap;font-size:clamp(100px,21vw,360px);
+ font-weight:900;line-height:1;letter-spacing:-.085em;
+ color:#cadaca;opacity:.042;transform:rotate(-8deg);
+}
+.login-wrap::after{
+ content:"";position:absolute;inset:0;z-index:-2;
+ pointer-events:none;opacity:.27;
+ background:repeating-linear-gradient(122deg,transparent 0 53px,#aabfa40b 54px 55px,transparent 56px 125px),
+ linear-gradient(90deg,transparent 49.95%,#c7d7bc12 50%,transparent 50.05%);
+}
+.login-shell{
+ position:relative;z-index:1;display:grid;
+ grid-template-columns:minmax(0,1fr) minmax(320px,450px);
+ gap:clamp(35px,5vw,100px);align-items:center;
+ width:min(1200px,100%);margin:auto;
+}
+.login-identity{
+ position:relative;display:flex;flex-direction:column;justify-content:space-between;
+ min-height:clamp(460px,65vh,650px);
+ padding:clamp(20px,3vw,40px) clamp(0px,2vw,23px);
+ color:#edf3e8;overflow:hidden;
+}
+.login-identity::before{
+ content:"V";position:absolute;top:2%;right:6%;z-index:-1;
+ font:700 clamp(220px,32vw,520px)/1 Georgia,serif;
+ color:transparent;-webkit-text-stroke:1px #c1d4c055;
+ transform:skewX(-13deg);opacity:.75;
+}
+.login-identity::after{
+ content:"";position:absolute;right:6%;top:12%;height:69%;width:1px;
+ background:linear-gradient(transparent,#dae4ce35,transparent);
+}
+.login-identity-header{display:flex;gap:14px;align-items:center}
+.login-monogram{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:56px;height:56px;border:1px solid #b9cbb288;color:#ecf5e4;
+ font:italic 600 38px/.9 Georgia,serif;letter-spacing:-.16em;
+ background:#253b2a45;
+}
+.login-mono-slash{font-size:18px;font-family:system-ui;transform:translate(4px,8px);color:#a2b59d}
+.login-identity-header strong{display:block;font-size:17px;letter-spacing:.28em}
+.login-identity-header small{display:block;margin-top:6px;font-size:9px;letter-spacing:.16em;color:#a6baaa}
+.login-identity-feature{position:relative;max-width:600px}
+.login-identity-tag{font-size:10px;letter-spacing:.26em;font-weight:700;color:#b5c9b1}
+.login-display{
+ margin:24px 0 20px;font-weight:850;font-style:normal;text-transform:uppercase;
+ font-size:clamp(75px,10.5vw,159px);line-height:.78;letter-spacing:-.088em;
+ text-shadow:0 18px 45px #0007;white-space:nowrap;
+}
+.login-display em{font-style:normal;color:#a6bea6}
+.login-identity-rule{width:min(210px,55%);height:2px;background:#a6bea6;margin:33px 0 22px}
+.login-identity-feature p{font-size:clamp(13px,1.25vw,16px);line-height:1.7;color:#c1cec0;font-weight:450;margin:0}
+.login-identity-footer{display:flex;gap:15px;align-items:center;justify-content:space-between;color:#a4bca9;font-size:10px;letter-spacing:.16em}
+.login{
+ position:relative;isolation:isolate;overflow:hidden;
+ width:100%;max-width:450px;
+ padding:clamp(26px,4vw,49px)!important;
+ border:1px solid #849d8166;
+ border-top:2px solid #acc6a7;
+ background:linear-gradient(140deg,#1b2620f4,#0e1713f6)!important;
+ box-shadow:0 40px 95px #0009,0 0 0 1px #8ba28511 inset;
+ backdrop-filter:blur(18px);border-radius:2px;
+}
+.login::before{
+ content:"";position:absolute;inset:0 0 auto;height:120px;z-index:-1;pointer-events:none;
+ background:linear-gradient(135deg,#cce3bd0e,transparent);
+}
+.login-form-accent{position:absolute;top:-50px;right:-18px;font:700 215px/1 Georgia,serif;color:#cad9c209;pointer-events:none;z-index:-1}
+.login-admin-mark{font-size:9px;font-weight:750;letter-spacing:.22em;color:#b7cdb4;margin:0 0 31px}
+.login-admin-mark span{margin-inline:6px;color:#ddeccc}
+.login .wordmark{font-size:clamp(23px,3vw,31px);letter-spacing:.26em;color:#f5f8ed}
+.login .eyebrow{margin-top:5px;color:#8aa68d}
+.login h1{margin-top:38px;font-size:clamp(30px,3.2vw,39px);letter-spacing:-.04em}
+.login p{color:#afc0b2;margin-bottom:29px}
+.login .btn.full{
+ color:#132117;background:linear-gradient(110deg,#ebf4e5,#c6d8c2);
+ border:1px solid #e0f1d5;min-height:50px;letter-spacing:.07em;
+ transition:filter .2s,transform .2s;
+}
+.login .btn.full:hover{filter:brightness(1.09);transform:translateY(-1px)}
+.login input{background:#0d1511!important;border:1px solid #526354!important;min-height:48px}
+.login input:focus{border-color:#bce0ac!important}
+@media(max-width:920px){
+ .login-shell{grid-template-columns:minmax(0,1fr) minmax(300px,440px);gap:24px}
+ .login-identity{padding-inline:0}
+ .login-display{font-size:clamp(60px,10vw,95px)}
+}
+@media(max-width:730px){
+ .login-wrap{padding:22px 15px!important;overflow-y:auto}
+ .login-shell{grid-template-columns:1fr;gap:15px;max-width:460px}
+ .login-identity{min-height:0;padding:10px 5px 7px}
+ .login-identity::after,.login-identity::before,.login-identity-feature,.login-identity-footer{display:none}
+ .login-identity-header{justify-content:center}
+ .login-monogram{width:43px;height:43px;font-size:28px}
+ .login-identity-header strong{font-size:15px}
+ .login-identity-header small{font-size:8px}
+ .login{max-width:none;padding:26px 23px!important}
+ .login-admin-mark{margin-bottom:22px}
+ .login h1{margin-top:25px}
+}
+@media(prefers-reduced-motion:reduce){.login .btn.full{transition:none}}
 </style></head><body>
-<div id="loginWrap" class="login-wrap"><form id="loginForm" class="login"><div class="wordmark">VYRANTE</div><div class="eyebrow">ADMINISTRATION</div><h1>Acesso restrito.</h1><p>Gerenciamento seguro da loja VYRANTE.</p><label class="field"><span>Usuário</span><input id="loginUser" autocomplete="username" value="admin 488 pista" required></label><label class="field"><span>Senha</span><div class="password-wrap"><input type="password" id="loginPass" autocomplete="current-password" required><button class="show-password" type="button" data-toggle-password="loginPass" aria-label="Mostrar senha">Mostrar</button></div></label><button class="btn full" type="submit">Entrar no painel</button><div id="loginError" class="status error" role="alert" hidden></div></form></div>
+<div id="loginWrap" class="login-wrap"><div class="login-shell"><div class="login-identity" aria-hidden="true"><div class="login-identity-header"><span class="login-monogram">V<span class="login-mono-slash">/</span></span><div><strong>VYRANTE</strong><small>ORIGIN / PERFORMANCE WEAR</small></div></div><div class="login-identity-feature"><span class="login-identity-tag">PERFORMANCE COM PRESENÇA / 001</span><div class="login-display">MOVE<br><em>BEYOND.</em></div><div class="login-identity-rule"></div><p>Identidade em cada movimento.<br>Disciplina em cada evolução.</p></div><div class="login-identity-footer"><span>THE BRAND EXPERIENCE</span><span>V / 2026</span></div></div><form id="loginForm" class="login"><div class="login-form-accent" aria-hidden="true">V</div><div class="login-admin-mark">PAINEL PRIVADO <span>✧</span> VYRANTE</div><div class="wordmark">VYRANTE</div><div class="eyebrow">ADMINISTRATION</div><h1>Acesso restrito.</h1><p>Gerenciamento seguro da loja VYRANTE.</p><label class="field"><span>Usuário</span><input id="loginUser" autocomplete="username" value="admin 488 pista" required></label><label class="field"><span>Senha</span><div class="password-wrap"><input type="password" id="loginPass" autocomplete="current-password" required><button class="show-password" type="button" data-toggle-password="loginPass" aria-label="Mostrar senha">Mostrar</button></div></label><button class="btn full" type="submit">Entrar no painel</button><div id="loginError" class="status error" role="alert" hidden></div></form></div></div>
 <div id="layout" class="layout" hidden><aside id="sidebar" class="sidebar"><div class="wordmark">VYRANTE</div><div class="tiny">STORE CONTROL / 2026</div><nav class="nav" id="nav"><button class="active" data-tab="overview">Visão geral</button><button data-tab="catalog">Produtos e estoque</button><button data-tab="content">Conteúdo e aparência</button><button data-tab="modes">Manutenção e lançamento</button><button data-tab="events">🎄 Eventos e temas</button><button data-tab="analytics">Métricas</button><button data-tab="security">Segurança e acesso</button></nav><div class="sidebar-bottom"><a href="https://vyrante-loja-admin.onrender.com" target="_blank" rel="noopener" class="secondary">Abrir loja pública</a><button type="button" id="logout" class="btn alt">Sair do painel</button></div></aside><main class="content"><header class="top"><div class="mobile-top"><button id="menu" class="btn alt" type="button">Menu</button><span class="wordmark" style="font-size:13px">VYRANTE</span></div><span class="eyebrow">PAINEL PRIVADO / VYRANTE</span><a href="https://vyrante-loja-admin.onrender.com" target="_blank" rel="noopener">Visualizar loja</a></header><div id="storageWarn" class="warning" hidden></div><section id="section" class="section"></section></main></div><div id="toast" class="toast" hidden></div>
 <script>
 'use strict';let state=null,csrf='',tab='overview',picked='',report=null;
