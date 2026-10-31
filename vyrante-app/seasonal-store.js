@@ -216,7 +216,7 @@
   function onLoaded(){
     fetch("/api/public",{cache:"no-store"})
       .then(r=>r.ok?r.json():Promise.reject(Error("API")))
-      .then(d=>{if(!d)return;if(d.musicThemes)window.VyrantMagic?.setMusicSettings(d.musicThemes);if(d.storeTheme!==undefined)window.applyVyrantEvent(d);})
+      .then(d=>{if(!d)return;if(d.musicThemes)window.VyrantMagic?.setMusicSettings?.(d.musicThemes);if(d.storeTheme!==undefined)window.applyVyrantEvent(d);})
       .catch(()=>{ /* The storefront remains usable in the default visual. */ });
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",onLoaded,{once:true});
