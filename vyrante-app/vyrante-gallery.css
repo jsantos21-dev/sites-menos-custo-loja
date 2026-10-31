@@ -28,3 +28,9 @@ body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.
 body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) .vy-thumb.is-active{border-color:var(--season-metal)!important}
 @media(max-width:750px){.pdp-gallery.vy-ready{display:flex;flex-direction:column;gap:10px}.vy-photo-frame{width:100%;aspect-ratio:4/5}.vy-photo-thumbs{width:100%;max-height:none;overflow-x:auto;overflow-y:hidden;flex-direction:row;padding:3px 2px 7px;scroll-snap-type:x mandatory}.vy-thumb{min-width:70px;width:74px;height:74px;min-height:0;scroll-snap-align:start}.vy-qty-wrap{margin-top:20px}.vy-photo-arrow{width:33px;height:40px}}
 @media(prefers-reduced-motion:reduce){.vy-photo-track{scroll-behavior:auto}.vy-photo-arrow{transition:none}}
+.vy-buy-now{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;padding:12px 19px;margin-top:11px;background:transparent;color:#cce0c3;border:1px solid #81977f;font:800 12px/1.3 system-ui,sans-serif;letter-spacing:.11em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.vy-buy-now:hover{background:#b9cbb2;color:#132019}
+.vy-buy-now:focus-visible{outline:2px solid #f1f9e9;outline-offset:3px}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) .vy-buy-now{border-color:var(--season-metal);color:var(--season-metal)}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) .vy-buy-now:hover{background:var(--season-metal);color:#121613}
+@media(prefers-reduced-motion:reduce){.vy-buy-now{transition:none}}
