@@ -24,6 +24,10 @@
       hero: "✧ 2027 · UM NOVO CAPÍTULO ✧",
       card: "NEW YEAR"
     }
+    ,
+    valentines: {symbol:"♥",title:"VYRANT · LOVE EDITION",subtitle:"Amor em cada movimento. Conexão em cada conquista.",product:"Edição Dia dos Namorados · Juntos na evolução",productText:"Celebre conexões, conquistas e carinho sem alterar peças, tamanhos ou valores.",cart:"♥ SUA SELEÇÃO · LOVE EDITION",hero:"♥ CONEXÕES QUE NOS FAZEM EVOLUIR ♥",card:"LOVE",introBadge:"DIA DOS NAMORADOS · VYRANT",introSymbol:"♥",introDivider:"♥ LOVE EDITION ♥",introTitle:"MOVIMENTOS QUE CONECTAM.",introCopy:"Uma história de amor também é feita de movimento. Descubra uma VYRANT elegante, romântica e cheia de presença.",aria:"Boas-vindas à edição de Dia dos Namorados",particle:"♥"},
+    halloween: {symbol:"🎃",title:"VYRANT · HALLOWEEN EDITION",subtitle:"Desafie a noite. Supere seus limites.",product:"Edição Halloween · Poder em cada movimento",productText:"Uma noite extraordinária para descobrir sua próxima conquista. Produtos e disponibilidade mantidos.",cart:"🎃 SUA SELEÇÃO · HALLOWEEN EDITION",hero:"✦ A NOITE É DE QUEM OUSA ✦",card:"HALLOWEEN",introBadge:"HALLOWEEN · VYRANT",introSymbol:"🎃",introDivider:"✦ DARK PERFORMANCE ✦",introTitle:"OUSE IR ALÉM.",introCopy:"Entre na noite com atitude. Uma edição de Halloween com mistério, energia e performance, criada para desafiar o comum.",aria:"Boas-vindas à edição de Halloween",particle:"✦"},
+    easter: {symbol:"🐰",title:"VYRANT · EASTER EDITION",subtitle:"Renove sua energia. Celebre novos começos.",product:"Edição Páscoa · Renove seu movimento",productText:"Uma temporada de renovação, leveza e novas conquistas. Peças, estoque e preços preservados.",cart:"🐰 SUA SELEÇÃO · EASTER EDITION",hero:"✿ TEMPO DE RENOVAR E EVOLUIR ✿",card:"EASTER",introBadge:"PÁSCOA · VYRANT",introSymbol:"🐰",introDivider:"✿ NOVOS COMEÇOS ✿",introTitle:"RENOVE O SEU MOVIMENTO.",introCopy:"Descubra novos começos em uma atmosfera suave e luminosa. Uma Páscoa VYRANT feita de energia, leveza e evolução.",aria:"Boas-vindas à edição de Páscoa",particle:"✿"}
   };
   let mode = null;
   let observer = null;
