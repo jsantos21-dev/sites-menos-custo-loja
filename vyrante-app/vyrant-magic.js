@@ -281,4 +281,12 @@ function updateScreen(m){
 }
 window.VyrantMagic={activateStore,stopStore,updateScreen,playClick:()=>{}};
 window.VyrantScreens={update:updateScreen};
+function verifyInitialScreen(){
+ fetch("/api/public",{cache:"no-store"})
+ .then(r=>r.ok?r.json():null)
+ .then(data=>{if(data?.mode)updateScreen(data.mode);})
+ .catch(()=>{});
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",verifyInitialScreen,{once:true});
+else verifyInitialScreen();
 })();
