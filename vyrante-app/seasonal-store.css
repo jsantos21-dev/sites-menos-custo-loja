@@ -234,3 +234,143 @@ body:is(.vyrant-christmas,.vyrant-newyear) .seasonal-sky{display:block}
 }
 @media(max-width:790px){.seasonal-firework{width:105px;height:105px}}
 @media(prefers-reduced-motion:reduce){.seasonal-firework{display:none!important}}
+
+
+/* Full-screen introductions only for the seasonal store modes.
+   Never uses body.locked; auto-dismisses and offers a skip action. */
+.seasonal-intro{
+ --intro-bg:#08140f;
+ --intro-mid:#243a28;
+ --intro-glow:rgba(175,35,54,.38);
+ --intro-gold:#f5dcaa;
+ position:fixed;inset:0;z-index:9999;
+ display:flex;align-items:center;justify-content:center;
+ overflow:hidden;isolation:isolate;
+ padding:clamp(24px,5vw,70px);
+ color:#fff7ea;
+ background:radial-gradient(ellipse at 72% 15%,var(--intro-glow),transparent 52%),
+ radial-gradient(ellipse at 18% 95%,var(--intro-mid),transparent 60%),
+ var(--intro-bg);
+ animation:seasonIntroIn .55s ease both;
+}
+.seasonal-intro-newyear{
+ --intro-bg:#060914;--intro-mid:#212139;--intro-glow:rgba(175,129,218,.31);
+ --intro-gold:#ffdc94;
+}
+.seasonal-intro:before,.seasonal-intro:after{
+ content:"";position:absolute;pointer-events:none;inset:0;z-index:-1;
+}
+.seasonal-intro-christmas:before{
+ background:repeating-linear-gradient(130deg,transparent 0 35px,rgba(183,131,52,.035) 35px 36px,transparent 36px 80px),
+ radial-gradient(circle at 10% 18%,#eabf7d24 0 1px,transparent 3px),
+ radial-gradient(circle at 85% 70%,#eabf7d24 0 2px,transparent 4px);
+}
+.seasonal-intro-newyear:before{
+ background:radial-gradient(circle at 20% 25%,#f4d99b70 0 1px,transparent 2px),
+ radial-gradient(circle at 70% 16%,#f4d99b80 0 1px,transparent 2px),
+ radial-gradient(circle at 88% 77%,#e7d3ff90 0 2px,transparent 3px),
+ radial-gradient(circle at 44% 80%,#f4d99b70 0 1px,transparent 2px);
+ background-size:250px 230px,330px 360px,410px 320px,300px 220px;
+}
+.seasonal-intro-christmas:after{
+ inset:4.5%;border:1px solid #dfc3962d;box-shadow:0 0 0 1px #6a332a38;
+}
+.seasonal-intro-newyear:after{
+ inset:4.5%;border:1px solid #ddbf8437;box-shadow:inset 0 0 50px #f1d2a109;
+}
+.seasonal-intro-panel{
+ width:min(820px,100%);text-align:center;position:relative;z-index:2;
+ display:flex;flex-direction:column;align-items:center;
+ padding:clamp(32px,5vw,55px) 10px;
+}
+.seasonal-intro-badge{
+ color:var(--intro-gold);text-transform:uppercase;
+ font:700 11px/1.5 system-ui,sans-serif;letter-spacing:.33em;
+ margin-bottom:35px;
+}
+.seasonal-intro-logo{position:relative;display:flex;align-items:center;justify-content:center;min-height:53px;margin-bottom:32px;max-width:260px;letter-spacing:.23em;font:750 28px/1.3 system-ui,sans-serif}
+.seasonal-intro-logo img{display:block;width:min(240px,62vw);max-height:68px;object-fit:contain;filter:drop-shadow(0 4px 20px #0006)}
+.seasonal-intro-logo-detail{position:absolute;right:-25px;top:-16px;font-size:29px;line-height:1;filter:drop-shadow(0 6px 6px #0009)}
+.seasonal-intro-newyear .seasonal-intro-logo-detail{color:var(--intro-gold);text-shadow:0 0 12px #e2bb7a}
+.seasonal-intro-divider{
+ color:var(--intro-gold);font:750 10px/1.4 system-ui,sans-serif;
+ letter-spacing:.33em;margin-bottom:22px;
+}
+.seasonal-intro-title{
+ font:750 clamp(48px,8.5vw,110px)/.87 "Barlow Condensed",Impact,system-ui,sans-serif;
+ text-transform:uppercase;letter-spacing:.009em;
+ text-wrap:balance;max-width:820px;margin:0 0 24px;
+ text-shadow:0 6px 45px #0005;
+}
+.seasonal-intro-christmas .seasonal-intro-title{
+ background:linear-gradient(180deg,#fffaf0,#f4ddba);color:transparent;
+ -webkit-background-clip:text;background-clip:text;
+}
+.seasonal-intro-newyear .seasonal-intro-title{
+ background:linear-gradient(180deg,#fffaf0,#caaa69);
+ -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.seasonal-intro-copy{
+ font:400 clamp(13px,1.8vw,16px)/1.7 system-ui,sans-serif;
+ max-width:570px;margin:0 auto 31px;color:#e5e0d8;
+}
+.seasonal-intro-enter{
+ border:1px solid var(--intro-gold);
+ background:var(--intro-gold);color:#111512;border-radius:2px;
+ padding:16px 35px;min-height:50px;
+ font:800 11px/1.3 system-ui,sans-serif;letter-spacing:.15em;
+ cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;
+}
+.seasonal-intro-enter:hover,.seasonal-intro-enter:focus-visible{
+ transform:translateY(-2px);box-shadow:0 7px 30px #f3d39644;
+ outline:2px solid #fff;
+}
+.seasonal-intro-note{
+ margin-top:19px;color:#bbb6ae;
+ letter-spacing:.08em;font:400 10px/1.5 system-ui,sans-serif;
+}
+.seasonal-intro-lights{position:absolute;inset:0;overflow:hidden;z-index:1;pointer-events:none}
+.seasonal-intro-flake,.seasonal-intro-spark{
+ position:absolute;top:-9vh;left:var(--x);
+ animation:seasonIntroFall var(--duration) linear infinite;
+ animation-delay:var(--delay);
+ font-size:clamp(13px,1.6vw,24px);opacity:.56;color:#fff9ee;
+ filter:drop-shadow(0 0 9px #fff8);
+}
+.seasonal-intro-spark{
+ color:#efca86;
+ animation:seasonIntroSpark var(--duration) ease-in-out infinite;
+}
+.seasonal-intro-newyear .seasonal-intro-lights:after{
+ content:"";position:absolute;left:50%;top:7%;width:220px;height:220px;
+ transform:translateX(-50%);
+ opacity:.4;pointer-events:none;
+ background:repeating-conic-gradient(#e3c68d 0deg 3deg,transparent 4deg 27deg);
+ -webkit-mask:radial-gradient(circle,transparent 0 15%,#000 16% 17%,transparent 18% 37%,#000 38% 40%,transparent 41%);
+ mask:radial-gradient(circle,transparent 0 15%,#000 16% 17%,transparent 18% 37%,#000 38% 40%,transparent 41%);
+ animation:seasonIntroFirework 3s ease-in-out infinite;
+}
+.seasonal-intro.is-closing{animation:seasonIntroOut .44s ease-in both;pointer-events:none}
+@keyframes seasonIntroIn{from{opacity:0}to{opacity:1}}
+@keyframes seasonIntroOut{from{opacity:1}to{opacity:0}}
+@keyframes seasonIntroFall{to{transform:translate3d(34px,115vh,0) rotate(110deg)}}
+@keyframes seasonIntroSpark{
+ 0%,100%{opacity:0;transform:translateY(0) scale(.3)}
+ 30%,55%{opacity:.75;transform:translateY(43vh) scale(1.6)}
+}
+@keyframes seasonIntroFirework{
+ 0%,100%{opacity:0;transform:translateX(-50%) scale(.25)}
+ 28%,50%{opacity:.6;transform:translateX(-50%) scale(1)}
+ 75%{opacity:0;transform:translateX(-50%) scale(1.3)}
+}
+@media(max-width:700px){
+ .seasonal-intro-badge{margin-bottom:23px;letter-spacing:.21em;font-size:10px}
+ .seasonal-intro-logo{margin-bottom:23px}
+ .seasonal-intro-title{font-size:clamp(46px,13vw,79px)}
+ .seasonal-intro-copy{font-size:13px}
+ .seasonal-intro-enter{width:100%;max-width:285px}
+}
+@media(prefers-reduced-motion:reduce){
+ .seasonal-intro,.seasonal-intro.is-closing{animation:none}
+ .seasonal-intro-lights *{animation:none!important;display:none!important}
+}
