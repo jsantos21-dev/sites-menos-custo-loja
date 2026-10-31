@@ -58,7 +58,7 @@ function createCarousel(gallery,p,photos){
 function createQuantity(info,p){
  var limit=Math.min(10,Math.max(1,Math.trunc(Number(p.maxPerOrder)||10)));
  var add=info.querySelector("#addToCart");if(!add)return;
- info.querySelector("#vyQtyBox")?.remove();
+ info.querySelector("#vyQtyBox")?.remove();info.querySelector("#vyBuyNow")?.remove();
  var wrap=element("div","vy-qty-wrap");wrap.id="vyQtyBox";
  var label=element("label","vy-qty-label","Quantidade");label.htmlFor="pdpQuantity";
  var hint=element("small","vy-qty-hint","Até "+limit+" peças por tamanho");
@@ -66,6 +66,8 @@ function createQuantity(info,p){
  down.type=up.type="button";down.setAttribute("aria-label","Diminuir quantidade");up.setAttribute("aria-label","Aumentar quantidade");
  input.id="pdpQuantity";input.type="number";input.min="1";input.max=String(limit);input.step="1";input.inputMode="numeric";input.value="1";input.setAttribute("aria-label","Quantidade de peças");
  controls.append(down,input,up);wrap.append(label,hint,controls);add.before(wrap);
+ var buy=element("button","vy-buy-now","Comprar agora · teste →");buy.type="button";buy.id="vyBuyNow";add.after(buy);
+ buy.addEventListener("click",()=>{var selected=info.querySelector(".size.selected");if(!selected){if(typeof window.toast==="function")window.toast("Selecione um tamanho antes de continuar.");else alert("Selecione um tamanho.");return;}if(typeof window.addToCart!=="function")return;window.addToCart(p.id,selected.dataset.size,Math.min(limit,clamp(input.value)));window.location.assign("/checkout");});
  var set=n=>{n=Math.min(limit,clamp(n));input.value=n;down.disabled=n<=1;up.disabled=n>=limit;};
  down.addEventListener("click",()=>set(Number(input.value)-1));up.addEventListener("click",()=>set(Number(input.value)+1));
  input.addEventListener("change",()=>set(input.value));input.addEventListener("blur",()=>set(input.value));
