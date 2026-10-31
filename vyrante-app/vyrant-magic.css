@@ -1,0 +1,126 @@
+/* VYRANT | Interactive particle systems, original sounds and themed access screens.
+   No third-party music, media files, fonts, scripts or external artwork. */
+.vyrant-magic-sky{
+ position:fixed;inset:0;z-index:58;
+ pointer-events:none;overflow:hidden;contain:layout paint;
+}
+.vyrant-magic-part{
+ position:absolute;left:0;top:0;pointer-events:none;
+ display:block;white-space:nowrap;line-height:1;
+ opacity:.7;filter:drop-shadow(0 0 5px #fff6);
+ user-select:none;-webkit-user-select:none;
+ will-change:transform;
+}
+body.vyrant-newyear .vyrant-magic-part{filter:drop-shadow(0 0 12px #ffd68a)}
+body.vyrant-valentines .vyrant-magic-part{color:#ffd1df;filter:drop-shadow(0 0 9px #e95e91)}
+body.vyrant-halloween .vyrant-magic-part{filter:drop-shadow(0 0 9px #f08334)}
+body.vyrant-easter .vyrant-magic-part{filter:drop-shadow(0 0 8px #dac6fa)}
+.vyrant-store-music{
+ position:fixed;right:17px;bottom:85px;z-index:80;pointer-events:none;
+}
+.vyrant-audio-button{
+ pointer-events:auto;cursor:pointer;min-height:42px;
+ padding:9px 16px;border:1px solid rgba(255,238,195,.55);
+ background:rgba(14,20,19,.9);color:#f7eedb;
+ border-radius:999px;box-shadow:0 8px 23px rgba(0,0,0,.26);
+ font:700 11px/1.3 system-ui,sans-serif;letter-spacing:.04em;
+ backdrop-filter:blur(16px);transition:transform .2s ease,background .2s ease;
+}
+.vyrant-audio-button:hover,.vyrant-audio-button:focus-visible{
+ transform:translateY(-2px);outline:2px solid #f5d6a2;
+}
+.vyrant-audio-button[aria-pressed="true"]{background:#2c4438;color:#fff;border-color:#eccb9b}
+.vyrant-screen-audio-slot{position:relative;z-index:4;margin:8px auto 0;display:flex;justify-content:center}
+#vyranteMode .vyrant-screen-audio-slot .vyrant-audio-button{
+ border-radius:2px;min-height:38px;background:rgba(4,7,8,.35);color:inherit;
+}
+/* Restore decorative favorite glyph by event, while preserving aria-pressed,
+   keyboard navigation and original wishlist click actions. */
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) button.wish-card{display:grid;place-items:center}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) button.wish-card svg{display:none!important}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) button.wish-card::after{
+ position:static;display:block;pointer-events:none;opacity:1;
+ font-size:18px;line-height:1;color:var(--season-metal);
+ text-shadow:0 0 8px var(--season-shadow);
+ background:none!important;box-shadow:none!important;
+}
+body.vyrant-christmas button.wish-card::after{content:"🎄"}
+body.vyrant-newyear button.wish-card::after{content:"🎆"}
+body.vyrant-valentines button.wish-card::after{content:"♥";font-size:21px}
+body.vyrant-halloween button.wish-card::after{content:"🎃"}
+body.vyrant-easter button.wish-card::after{content:"🐰"}
+body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.vyrant-easter) button.wish-card.active{
+ border-color:var(--season-metal)!important;
+ background:var(--season-primary)!important;
+}
+/* Access screen theme variables deliberately independent of storefront */
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter){
+ --screen-main:#172b21;--screen-second:#7d202e;--screen-light:#f5dfb5;--screen-text:#fef5e9;
+ background:
+  radial-gradient(ellipse at 70% 18%,var(--screen-second),transparent 60%),
+  radial-gradient(ellipse at 14% 85%,var(--screen-main),transparent 65%),
+  #0a1110!important;
+ color:var(--screen-text)!important;
+ isolation:isolate;
+}
+#vyranteMode.vyrant-screen-christmas{
+ --screen-main:#173e2a;--screen-second:#8f2131;--screen-light:#f7e5c3;--screen-text:#fff3e4;
+}
+#vyranteMode.vyrant-screen-newyear{
+ --screen-main:#1e2448;--screen-second:#64508b;--screen-light:#f8d898;--screen-text:#fff9ef;
+}
+#vyranteMode.vyrant-screen-valentines{
+ --screen-main:#442035;--screen-second:#a03f65;--screen-light:#ffd0df;--screen-text:#fff4f5;
+}
+#vyranteMode.vyrant-screen-halloween{
+ --screen-main:#302048;--screen-second:#9b4218;--screen-light:#ffce91;--screen-text:#fff5e5;
+}
+#vyranteMode.vyrant-screen-easter{
+ --screen-main:#35584d;--screen-second:#716299;--screen-light:#f2e3d1;--screen-text:#f8fff5;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-panel{
+ position:relative;z-index:5;
+ padding-top:50px;padding-bottom:50px;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-eyebrow{
+ color:var(--screen-light)!important;letter-spacing:.23em;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-panel h1{
+ color:var(--screen-text)!important;
+ text-shadow:0 7px 35px #0008;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-panel p{
+ color:#f2e7df!important;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-clock>div{
+ background:rgba(0,0,0,.26)!important;
+ border:1px solid var(--screen-light)!important;
+ box-shadow:0 0 18px var(--screen-second);
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-clock strong{
+ color:var(--screen-light)!important;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .mode-clock span{
+ color:#f6e6db!important;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter) .vyrant-screen-sky{
+ position:fixed;inset:0;z-index:1;
+}
+#vyranteMode:is(.vyrant-screen-christmas,.vyrant-screen-newyear,.vyrant-screen-valentines,.vyrant-screen-halloween,.vyrant-screen-easter)::before{
+ position:absolute;top:11%;right:8%;z-index:2;
+ font-size:clamp(52px,10vw,130px);opacity:.16;
+ pointer-events:none;filter:drop-shadow(0 6px 40px var(--screen-light));
+}
+#vyranteMode.vyrant-screen-christmas::before{content:"🎄"}
+#vyranteMode.vyrant-screen-newyear::before{content:"🎆"}
+#vyranteMode.vyrant-screen-valentines::before{content:"♥"}
+#vyranteMode.vyrant-screen-halloween::before{content:"🎃"}
+#vyranteMode.vyrant-screen-easter::before{content:"🥚"}
+@media(max-width:700px){
+ .vyrant-store-music{bottom:75px;right:12px}
+ .vyrant-audio-button{padding:8px 12px;font-size:10px}
+ #vyranteMode .vyrant-screen-sky{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+ .vyrant-magic-sky{display:none!important}
+}
