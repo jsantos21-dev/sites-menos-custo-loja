@@ -107,7 +107,7 @@
     const lights=el("div","seasonal-intro-lights");
     lights.setAttribute("aria-hidden","true");
     for(let i=0;i<(MEDIA?0:14);i++){
-      const sparkle=el("span",christmas?"seasonal-intro-flake":"seasonal-intro-spark",d.particle||(christmas?(i%4?"❄":"✦"):"✧"));
+      const introIcons={christmas:"❄",newyear:"🎆",valentines:"♥",halloween:"🎃",easter:"🥚"};const sparkle=el("span",christmas?"seasonal-intro-flake":"seasonal-intro-spark",introIcons[type]||"✦");
       sparkle.style.setProperty("--x",((i*29.7)%96)+"%");
       sparkle.style.setProperty("--delay",(-i*.43)+"s");
       sparkle.style.setProperty("--duration",(5+i%6)+"s");
