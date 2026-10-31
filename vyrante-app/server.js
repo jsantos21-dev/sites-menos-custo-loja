@@ -1,7 +1,7 @@
 'use strict';
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 let Pool;try{Pool=require('pg').Pool}catch{}
-const ROOT=__dirname,PORT=Number(process.env.PORT||8090),ORIGIN=process.env.STORE_ORIGIN||'https://vyrante-core-001.onrender.com';
+const ROOT=__dirname,PORT=Number(process.env.PORT||8090),ORIGIN=process.env.STORE_ORIGIN||'https://vyrante-loja-admin.onrender.com';
 const SEED=JSON.parse(fs.readFileSync(path.join(ROOT,'seed-products.json'),'utf8'));
 const makeDefault=()=>({settings:{collection:'ORIGIN',announcement:'VYRANTE ORIGIN / PERFORMANCE COM PRESENÇA',slogan:'Performance com presença.',heroEyebrow:'VYRANTE / ORIGIN COLLECTION',heroTitle:'FEITA PARA',heroAccent:'EVOLUIR.',heroText:'Performance com presença. Uma coleção que acompanha cada movimento, no treino e além dele.',aboutText:'A VYRANTE nasce da união entre treino, disciplina e identidade.',footerText:'Vista sua evolução. Performance com presença.',instagram:'https://www.instagram.com/vyrante_/',accent:'#b5c1b4',heroImage:'',logoImage:'',supportEmail:'',currency:'BRL'},mode:{type:'normal',endsAt:null,title:'',subtitle:'',background:''},products:SEED,security:{passwordHash:null},updatedAt:new Date().toISOString()});
 let state=makeDefault(),events=[],pool=null,dbReady=false,dbError='',bootReady=false;
