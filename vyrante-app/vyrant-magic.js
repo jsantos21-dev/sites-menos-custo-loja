@@ -1,4 +1,4 @@
-/* VYRANT: five original interactive seasonal experiences.
+/* VYRANTE: five original interactive seasonal experiences.
    Original synthesized motifs (not recordings or copyrighted melodies).
    Sound is user-initiated, off by default. */
 (()=>{"use strict";
@@ -275,7 +275,7 @@ function updateScreen(m){
   const eyebrow=root.querySelector(".mode-eyebrow");
   if(!eyebrow||!root.isConnected)return;
   const label=current==="maintenance"?"MANUTENÇÃO":current==="launch"?"NOVO LANÇAMENTO":"EVENTO";
-  eyebrow.textContent="VYRANT / "+label+(theme?" · "+themes[theme].label.toUpperCase():"");
+  eyebrow.textContent="VYRANTE / "+label+(theme?" · "+themes[theme].label.toUpperCase():"");
  });
  if(!muted)startAudio();
 }
