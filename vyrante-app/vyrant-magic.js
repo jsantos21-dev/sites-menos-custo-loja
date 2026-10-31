@@ -210,7 +210,7 @@ function sound(note,duration=.13,level=.027,wave="sine"){
 }
 function setAudioButtonLabels(){
  document.querySelectorAll(".vyrant-audio-button").forEach(button=>{
-  button.textContent=muted?"♪ Ouvir música "+(themes[screenTheme||storeTheme]?.label||"temática"):"♫ Silenciar música";
+  button.textContent=muted?"♪ Ouvir · "+(SCORES[screenTheme||storeTheme]?.name||"Trilha temática"):"♫ Silenciar música";
   button.setAttribute("aria-pressed",String(!muted));
  });
 }
@@ -222,7 +222,7 @@ function toggleAudio(){
 }
 function audioButton(where,mode){
  const button=make("button","vyrant-audio-button"+(mode==="screen"?" screen-audio":""));
- button.type="button";button.textContent="♪ Ouvir música";button.setAttribute("aria-label","Ativar ou silenciar música original e efeitos do evento");
+ button.type="button";button.textContent="♪ Ouvir trilha";button.setAttribute("aria-label","Ativar ou silenciar música original e efeitos do evento");
  button.setAttribute("aria-pressed",String(!muted));
  button.addEventListener("click",e=>{e.stopPropagation();toggleAudio();});
  where.append(button);setAudioButtonLabels();
