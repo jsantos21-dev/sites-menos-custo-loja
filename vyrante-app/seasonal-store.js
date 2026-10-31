@@ -168,7 +168,7 @@
     const sky=el("div","seasonal-sky");
     sky.setAttribute("aria-hidden","true");
     const isChristmas=type==="christmas";
-    const seasonalParticle=type==="valentines"?"♥":type==="halloween"?"✦":type==="easter"?"✿":null;
+    const seasonalParticle=type==="valentines"?"♥":type==="halloween"?"🦇":type==="easter"?"✿":null;
     const seasonalClass=type==="valentines"?"heart":type==="halloween"?"bat":type==="easter"?"petal":null;
     const quantity=window.innerWidth<700?16:34;
     for(let i=0;i<quantity;i++){
