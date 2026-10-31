@@ -29,6 +29,9 @@
   let observer = null;
   let countdown = null;
   let serial = 0;
+  let introTheme = null;
+  let introTimer = null;
+  let introRemoveTimer = null;
   function el(tag,cls,text){
     const x=document.createElement(tag);
     if(cls)x.className=cls;
@@ -75,6 +78,62 @@
         top.insertAdjacentElement("afterend",bar);
       }
     });
+  }
+
+  /* A short, dismissible seasonal introduction — not a maintenance or launch lock. */
+  function closeIntro(immediate=false){
+    if(introTimer){clearTimeout(introTimer);introTimer=null;}
+    if(introRemoveTimer){clearTimeout(introRemoveTimer);introRemoveTimer=null;}
+    const screen=document.querySelector("#vyrant-season-intro");
+    if(!screen)return;
+    if(immediate){screen.remove();return;}
+    screen.classList.add("is-closing");
+    introRemoveTimer=setTimeout(()=>screen.remove(),450);
+  }
+  function showIntro(type){
+    closeIntro(true);
+    const d=LABELS[type];
+    if(!d)return;
+    const christmas=type==="christmas";
+    const screen=el("div","seasonal-intro seasonal-intro-"+type);
+    screen.id="vyrant-season-intro";
+    screen.setAttribute("role","dialog");
+    screen.setAttribute("aria-label",christmas?"Boas-vindas à edição de Natal":"Boas-vindas à edição de Ano Novo");
+    const lights=el("div","seasonal-intro-lights");
+    lights.setAttribute("aria-hidden","true");
+    for(let i=0;i<(MEDIA?0:14);i++){
+      const sparkle=el("span",christmas?"seasonal-intro-flake":"seasonal-intro-spark",christmas?(i%4?"❄":"✦"):"✧");
+      sparkle.style.setProperty("--x",((i*29.7)%96)+"%");
+      sparkle.style.setProperty("--delay",(-i*.43)+"s");
+      sparkle.style.setProperty("--duration",(5+i%6)+"s");
+      lights.append(sparkle);
+    }
+    screen.append(lights);
+    const panel=el("div","seasonal-intro-panel");
+    const badge=el("span","seasonal-intro-badge",christmas?"HOLIDAY SEASON / 2026":"NEW YEAR / 2027");
+    panel.append(badge);
+    const logo=el("div","seasonal-intro-logo");
+    const storeLogo=document.querySelector(".brand img")||document.querySelector("#modeLogo");
+    if(storeLogo){
+      const brand=storeLogo.cloneNode(false);
+      brand.removeAttribute("id");
+      brand.alt="VYRANT";
+      logo.append(brand);
+    }else logo.textContent="VYRANT";
+    logo.append(el("span","seasonal-intro-logo-detail",christmas?"🎅":"✦"));
+    panel.append(logo);
+    panel.append(el("div","seasonal-intro-divider",christmas?"✧  NATAL VYRANT  ✧":"✧  UM NOVO CICLO  ✧"));
+    panel.append(el("h1","seasonal-intro-title",christmas?"UM NATAL PARA EVOLUIR.":"UM NOVO ANO. UMA NOVA VERSÃO."));
+    panel.append(el("p","seasonal-intro-copy",christmas?"O espírito do Natal encontra a performance. Descubra a VYRANT em uma experiência de fim de ano.":"Celebre novas conquistas e novos movimentos. Bem-vindo à edição especial de Ano Novo da VYRANT."));
+    const enter=el("button","seasonal-intro-enter","EXPLORAR A LOJA");
+    enter.type="button";
+    enter.addEventListener("click",()=>closeIntro(false),{once:true});
+    panel.append(enter);
+    const note=el("span","seasonal-intro-note","Coleção, produtos e carrinho disponíveis normalmente");
+    panel.append(note);
+    screen.append(panel);
+    document.body.append(screen);
+    introTimer=setTimeout(()=>closeIntro(false),MEDIA?850:2400);
   }
   function createBanner(m,d){
     const bar=el("div","seasonal-shop-banner");
@@ -127,9 +186,11 @@
   }
   function setTheme(m){
     ++serial;
+    const previous=mode;
     removeSeasonal();
     mode = m&&m.type==="event"?(m.eventTheme==="newyear"?"newyear":"christmas"):null;
-    if(!mode)return;
+    if(!mode){introTheme=null;closeIntro(true);return;}
+    if(introTheme!==mode){introTheme=mode;showIntro(mode);}
     const d=LABELS[mode];
     document.body.classList.add(mode==="christmas"?"vyrant-christmas":"vyrant-newyear");
     createBanner(m,d);
