@@ -1,4 +1,4 @@
-/* VYRANT | Full-store event experience. Never blocks catalog or product interactions. */
+/* VYRANTE | Full-store event experience. Never blocks catalog or product interactions. */
 (function(){
   "use strict";
   const ORIGINAL = window.applyVyrantEvent;
@@ -6,17 +6,17 @@
   const LABELS = {
     christmas: {
       symbol: "🎄",
-      title: "VYRANT · CHRISTMAS EDITION",
+      title: "VYRANTE · CHRISTMAS EDITION",
       subtitle: "Uma temporada especial. Sua evolução continua.",
       product: "Edição Natal · Performance com presença",
-      productText: "Uma atmosfera de Natal para explorar sua coleção VYRANT. As peças e os tamanhos permanecem os mesmos.",
+      productText: "Uma atmosfera de Natal para explorar sua coleção VYRANTE. As peças e os tamanhos permanecem os mesmos.",
       cart: "🎅 SUA SELEÇÃO · CHRISTMAS EDITION",
       hero: "✧ A TEMPORADA MAIS ESPECIAL DO ANO ✧",
       card: "CHRISTMAS"
     },
     newyear: {
       symbol: "✦",
-      title: "VYRANT · NEW YEAR EDITION",
+      title: "VYRANTE · NEW YEAR EDITION",
       subtitle: "O próximo capítulo começa com você.",
       product: "Edição Ano Novo · Comece em movimento",
       productText: "Um novo ano, novos objetivos. Explore a coleção original em uma experiência especial de celebração.",
@@ -25,9 +25,9 @@
       card: "NEW YEAR"
     }
     ,
-    valentines: {symbol:"♥",title:"VYRANT · LOVE EDITION",subtitle:"Amor em cada movimento. Conexão em cada conquista.",product:"Edição Dia dos Namorados · Juntos na evolução",productText:"Celebre conexões, conquistas e carinho sem alterar peças, tamanhos ou valores.",cart:"♥ SUA SELEÇÃO · LOVE EDITION",hero:"♥ CONEXÕES QUE NOS FAZEM EVOLUIR ♥",card:"LOVE",introBadge:"DIA DOS NAMORADOS · VYRANT",introSymbol:"♥",introDivider:"♥ LOVE EDITION ♥",introTitle:"MOVIMENTOS QUE CONECTAM.",introCopy:"Uma história de amor também é feita de movimento. Descubra uma VYRANT elegante, romântica e cheia de presença.",aria:"Boas-vindas à edição de Dia dos Namorados",particle:"♥"},
-    halloween: {symbol:"🎃",title:"VYRANT · HALLOWEEN EDITION",subtitle:"Desafie a noite. Supere seus limites.",product:"Edição Halloween · Poder em cada movimento",productText:"Uma noite extraordinária para descobrir sua próxima conquista. Produtos e disponibilidade mantidos.",cart:"🎃 SUA SELEÇÃO · HALLOWEEN EDITION",hero:"✦ A NOITE É DE QUEM OUSA ✦",card:"HALLOWEEN",introBadge:"HALLOWEEN · VYRANT",introSymbol:"🎃",introDivider:"✦ DARK PERFORMANCE ✦",introTitle:"OUSE IR ALÉM.",introCopy:"Entre na noite com atitude. Uma edição de Halloween com mistério, energia e performance, criada para desafiar o comum.",aria:"Boas-vindas à edição de Halloween",particle:"✦"},
-    easter: {symbol:"🐰",title:"VYRANT · EASTER EDITION",subtitle:"Renove sua energia. Celebre novos começos.",product:"Edição Páscoa · Renove seu movimento",productText:"Uma temporada de renovação, leveza e novas conquistas. Peças, estoque e preços preservados.",cart:"🐰 SUA SELEÇÃO · EASTER EDITION",hero:"✿ TEMPO DE RENOVAR E EVOLUIR ✿",card:"EASTER",introBadge:"PÁSCOA · VYRANT",introSymbol:"🐰",introDivider:"✿ NOVOS COMEÇOS ✿",introTitle:"RENOVE O SEU MOVIMENTO.",introCopy:"Descubra novos começos em uma atmosfera suave e luminosa. Uma Páscoa VYRANT feita de energia, leveza e evolução.",aria:"Boas-vindas à edição de Páscoa",particle:"✿"}
+    valentines: {symbol:"♥",title:"VYRANTE · LOVE EDITION",subtitle:"Amor em cada movimento. Conexão em cada conquista.",product:"Edição Dia dos Namorados · Juntos na evolução",productText:"Celebre conexões, conquistas e carinho sem alterar peças, tamanhos ou valores.",cart:"♥ SUA SELEÇÃO · LOVE EDITION",hero:"♥ CONEXÕES QUE NOS FAZEM EVOLUIR ♥",card:"LOVE",introBadge:"DIA DOS NAMORADOS · VYRANTE",introSymbol:"♥",introDivider:"♥ LOVE EDITION ♥",introTitle:"MOVIMENTOS QUE CONECTAM.",introCopy:"Uma história de amor também é feita de movimento. Descubra uma VYRANTE elegante, romântica e cheia de presença.",aria:"Boas-vindas à edição de Dia dos Namorados",particle:"♥"},
+    halloween: {symbol:"🎃",title:"VYRANTE · HALLOWEEN EDITION",subtitle:"Desafie a noite. Supere seus limites.",product:"Edição Halloween · Poder em cada movimento",productText:"Uma noite extraordinária para descobrir sua próxima conquista. Produtos e disponibilidade mantidos.",cart:"🎃 SUA SELEÇÃO · HALLOWEEN EDITION",hero:"✦ A NOITE É DE QUEM OUSA ✦",card:"HALLOWEEN",introBadge:"HALLOWEEN · VYRANTE",introSymbol:"🎃",introDivider:"✦ DARK PERFORMANCE ✦",introTitle:"OUSE IR ALÉM.",introCopy:"Entre na noite com atitude. Uma edição de Halloween com mistério, energia e performance, criada para desafiar o comum.",aria:"Boas-vindas à edição de Halloween",particle:"✦"},
+    easter: {symbol:"🐰",title:"VYRANTE · EASTER EDITION",subtitle:"Renove sua energia. Celebre novos começos.",product:"Edição Páscoa · Renove seu movimento",productText:"Uma temporada de renovação, leveza e novas conquistas. Peças, estoque e preços preservados.",cart:"🐰 SUA SELEÇÃO · EASTER EDITION",hero:"✿ TEMPO DE RENOVAR E EVOLUIR ✿",card:"EASTER",introBadge:"PÁSCOA · VYRANTE",introSymbol:"🐰",introDivider:"✿ NOVOS COMEÇOS ✿",introTitle:"RENOVE O SEU MOVIMENTO.",introCopy:"Descubra novos começos em uma atmosfera suave e luminosa. Uma Páscoa VYRANTE feita de energia, leveza e evolução.",aria:"Boas-vindas à edição de Páscoa",particle:"✿"}
   };
   let mode = null;
   let observer = null;
@@ -122,14 +122,14 @@
     if(storeLogo){
       const brand=storeLogo.cloneNode(false);
       brand.removeAttribute("id");
-      brand.alt="VYRANT";
+      brand.alt="VYRANTE";
       logo.append(brand);
-    }else logo.textContent="VYRANT";
+    }else logo.textContent="VYRANTE";
     logo.append(el("span","seasonal-intro-logo-detail",d.introSymbol||(christmas?"🎅":"✦")));
     panel.append(logo);
-    panel.append(el("div","seasonal-intro-divider",d.introDivider||(christmas?"✧  NATAL VYRANT  ✧":"✧  UM NOVO CICLO  ✧")));
+    panel.append(el("div","seasonal-intro-divider",d.introDivider||(christmas?"✧  NATAL VYRANTE  ✧":"✧  UM NOVO CICLO  ✧")));
     panel.append(el("h1","seasonal-intro-title",d.introTitle||(christmas?"UM NATAL PARA EVOLUIR.":"UM NOVO ANO. UMA NOVA VERSÃO.")));
-    panel.append(el("p","seasonal-intro-copy",d.introCopy||(christmas?"O espírito do Natal encontra a performance. Descubra a VYRANT em uma experiência de fim de ano.":"Celebre novas conquistas e novos movimentos. Bem-vindo à edição especial de Ano Novo da VYRANT.")));
+    panel.append(el("p","seasonal-intro-copy",d.introCopy||(christmas?"O espírito do Natal encontra a performance. Descubra a VYRANTE em uma experiência de fim de ano.":"Celebre novas conquistas e novos movimentos. Bem-vindo à edição especial de Ano Novo da VYRANTE.")));
     const enter=el("button","seasonal-intro-enter","EXPLORAR A LOJA");
     enter.type="button";
     enter.addEventListener("click",()=>closeIntro(false),{once:true});
