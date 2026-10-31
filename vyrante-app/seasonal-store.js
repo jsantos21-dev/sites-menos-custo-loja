@@ -168,16 +168,18 @@
     const sky=el("div","seasonal-sky");
     sky.setAttribute("aria-hidden","true");
     const isChristmas=type==="christmas";
+    const seasonalParticle=type==="valentines"?"♥":type==="halloween"?"✦":type==="easter"?"✿":null;
+    const seasonalClass=type==="valentines"?"heart":type==="halloween"?"bat":type==="easter"?"petal":null;
     const quantity=window.innerWidth<700?16:34;
     for(let i=0;i<quantity;i++){
-      const particle=el("span",isChristmas?"flake":"spark",isChristmas?(i%3?"❄":"·"):(i%4?"✦":"✧"));
+      const particle=el("span",seasonalClass||(isChristmas?"flake":"spark"),seasonalParticle||(isChristmas?(i%3?"❄":"·"):(i%4?"✦":"✧")));
       particle.style.setProperty("--left",((i*37.13+11)%100).toFixed(2)+"%");
       particle.style.setProperty("--size",(8+i%12)+"px");
       particle.style.setProperty("--duration",(11+i%16)+"s");
       particle.style.setProperty("--delay",(-i*.47)+"s");
       sky.append(particle);
     }
-    if(!isChristmas){
+    if(type==="newyear"){
       for(let i=0;i<5;i++){
         const burst=el("div","seasonal-firework");
         burst.style.setProperty("--fx",((i*19+11)%92)+"%");
@@ -192,11 +194,12 @@
     ++serial;
     const previous=mode;
     removeSeasonal();
-    mode = m&&m.type==="event"?(m.eventTheme==="newyear"?"newyear":"christmas"):null;
+    mode = m&&m.type==="event"?(LABELS[m.eventTheme]?m.eventTheme:"christmas"):null;
+    document.body.classList.remove("vyrant-christmas","vyrant-newyear","vyrant-valentines","vyrant-halloween","vyrant-easter");
     if(!mode){introTheme=null;closeIntro(true);return;}
     if(introTheme!==mode){introTheme=mode;showIntro(mode);}
     const d=LABELS[mode];
-    document.body.classList.add(mode==="christmas"?"vyrant-christmas":"vyrant-newyear");
+    document.body.classList.add("vyrant-"+mode);
     createBanner(m,d);
     createSky(mode);
     decorate();
@@ -207,7 +210,7 @@
     }
   }
   window.applyVyrantEvent=function(m){
-    try{if(typeof ORIGINAL==="function")ORIGINAL(m);}catch(err){console.warn("VYRANT theme base",err);}
+    try{if(typeof ORIGINAL==="function")ORIGINAL(m&&m.type==="event"&&!["christmas","newyear"].includes(m.eventTheme)?{type:"normal"}:m);}catch(err){console.warn("VYRANT theme base",err);}
     setTheme(m);
   };
   function onLoaded(){
