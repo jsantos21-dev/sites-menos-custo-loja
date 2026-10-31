@@ -36,18 +36,26 @@ class Field{
      spin:Math.random()*40-20
     });
    }
-   this.last=performance.now();
+   this.last=performance.now();this.began=this.last;
    this.frame=this.frame.bind(this);
    this.raf=requestAnimationFrame(this.frame);
   }
  }
  frame(now){
   if(!this.active)return;
+  if(now-this.last<31){this.raf=requestAnimationFrame(this.frame);return;}
   const dt=Math.min(2,(now-this.last)/16.67||1);this.last=now;
+  // The first 2 minutes are fully festive. Between 2 and 3 minutes,
+  // gradually taper to 30% so the screen remains clean and performant.
+  const mins=(now-this.began)/60000;
+  const density=mins<=2?1:mins>=3?.30:1-.70*(mins-2);
+  const visible=Math.max(4,Math.round(this.items.length*density));
   const width=innerWidth,height=innerHeight;
   if(!document.hidden&&this.el.isConnected){
    for(let i=0;i<this.items.length;i++){
     const p=this.items[i];
+    if(i>=visible){if(p.el.style.display!=='none')p.el.style.display='none';continue;}
+    if(p.el.style.display==='none')p.el.style.display='';
     const dx=p.x-gust.x,dy=p.y-gust.y,dist=Math.hypot(dx,dy)||1;
     const nearby=now-gust.time<520&&dist<210;
     if(nearby){
