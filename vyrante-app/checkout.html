@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#101715">
+<title>Checkout demonstrativo — VYRANTE</title>
+<meta name="description" content="Experiência demonstrativa de checkout VYRANTE. Nenhuma cobrança ou pedido é realizado.">
+<link rel="stylesheet" href="/assets/vyrante-checkout.css?v=20261031demo01">
+<script defer src="/assets/vyrante-checkout.js?v=20261031demo01"></script>
+</head><body>
+<div class="demo-bar" role="status"><span class="demo-dot"></span><b>AMBIENTE DE TESTE</b> <span>— Nenhum pagamento ou pedido será realizado</span></div>
+<header class="checkout-header">
+  <a class="brand-link" href="/" aria-label="Voltar à loja VYRANTE"><span class="brand-emblem">V</span><span>VYRANTE<small>PERFORMANCE COM PRESENÇA</small></span></a>
+  <div class="header-center"><span class="lock-icon" aria-hidden="true">◇</span> EXPERIÊNCIA DE CHECKOUT</div>
+  <a class="header-back" href="/#/">← <span>Continuar explorando</span></a>
+</header>
+<main class="checkout-main">
+ <div class="heading"><p class="kicker">VYRANTE / SUA JORNADA</p><h1>SUA ESCOLHA.<br><em>SEU PRÓXIMO PASSO.</em></h1>
+ <p>Um checkout desenhado para ser simples e elegante. Explore todas as etapas no modo demonstração.</p></div>
+ <div class="checkout-grid">
+  <section class="flow" aria-label="Etapas do checkout">
+   <nav class="stepper" aria-label="Progresso do checkout">
+    <button type="button" class="step is-active" data-step="1" aria-current="step"><span>01</span><strong>Seus dados</strong></button>
+    <span class="step-line" aria-hidden="true"></span>
+    <button type="button" class="step" data-step="2" disabled><span>02</span><strong>Pagamento</strong></button>
+    <span class="step-line" aria-hidden="true"></span>
+    <button type="button" class="step" data-step="3" disabled><span>03</span><strong>Revisão</strong></button>
+   </nav>
+   <div class="flow-card" id="checkoutFlow">
+     <div class="loading" role="status">Preparando sua sacola...</div>
+   </div>
+   <div class="checkout-guidance"><span aria-hidden="true">✧</span><div><b>Uma experiência feita para você</b><p>Seu conforto começa antes mesmo de vestir a peça. Simulação sem cadastro, cobrança ou envio de dados.</p></div></div>
+  </section>
+  <aside class="summary" aria-label="Resumo da seleção">
+   <div class="summary-inner">
+    <div class="summary-top"><span>VYRANTE / ORIGIN</span><span>ETAPA DE TESTE</span></div>
+    <h2>Sua seleção <span id="bagCount">0 peças</span></h2>
+    <div id="orderItems" aria-live="polite"><p class="muted">Carregando produtos...</p></div>
+    <div class="totals">
+     <div><span>Subtotal</span><strong id="subtotal">R$ 0,00</strong></div>
+     <div><span>Frete</span><span class="muted">Não calculado no teste</span></div>
+     <div><span>Descontos</span><span class="muted">Não disponíveis</span></div>
+     <div class="summary-total"><span>Total parcial</span><strong id="total">R$ 0,00</strong></div>
+    </div>
+    <p class="summary-disclaimer">Total demonstrativo das peças, sem frete. O valor definitivo só poderá ser calculado após a futura integração comercial.</p>
+    <a href="/#/" class="more-link">← Adicionar outras peças</a>
+    <div class="summary-foot"><span>✧</span> VYRANTE — VISTA SUA EVOLUÇÃO.</div>
+   </div>
+  </aside>
+ </div>
+</main>
+<footer class="checkout-footer"><span>© VYRANTE — EXPERIÊNCIA DE TESTE</span><span>Não há reserva, pagamento ou pedido nesta demonstração.</span></footer>
+<div class="toast" id="checkoutToast" role="status" aria-live="polite" hidden></div>
+</body></html>
