@@ -1,4 +1,4 @@
-/* VYRANT | Interactive particle systems, original sounds and themed access screens.
+/* VYRANTE | Interactive particle systems, original sounds and themed access screens.
    No third-party music, media files, fonts, scripts or external artwork. */
 .vyrant-magic-sky{
  position:fixed;inset:0;z-index:58;
@@ -123,4 +123,82 @@ body:is(.vyrant-christmas,.vyrant-newyear,.vyrant-valentines,.vyrant-halloween,.
 }
 @media(prefers-reduced-motion:reduce){
  .vyrant-magic-sky{display:none!important}
+}
+
+/* Screen typography: protect every final letter on mobile, tablets, and desktop. */
+#vyranteMode{
+ box-sizing:border-box;
+ padding:clamp(14px,3vw,30px)!important;
+ overflow-x:hidden!important;
+}
+#vyranteMode .mode-panel{
+ box-sizing:border-box;
+ width:min(780px,100%)!important;
+ max-width:100%!important;
+ min-width:0!important;
+ padding:clamp(26px,4vw,45px) clamp(12px,3vw,30px)!important;
+ gap:clamp(14px,2.4vw,22px)!important;
+}
+#vyranteMode .mode-panel h1{
+ display:block;
+ box-sizing:border-box;
+ width:100%;
+ max-width:100%;
+ margin-inline:auto!important;
+ padding:0 clamp(3px,1vw,10px)!important;
+ font-family:"Barlow Condensed","Arial Narrow",Impact,sans-serif!important;
+ font-size:clamp(30px,5.3vw,70px)!important;
+ line-height:1.075!important;
+ font-weight:700!important;
+ letter-spacing:0!important;
+ text-wrap:balance;
+ overflow-wrap:anywhere!important;
+ word-break:normal;
+ hyphens:auto;
+}
+#vyranteMode .mode-eyebrow{
+ max-width:100%;
+ font-size:clamp(9px,1.25vw,11px)!important;
+ letter-spacing:clamp(.08em,.15vw,.2em)!important;
+ overflow-wrap:anywhere;
+}
+#vyranteMode .mode-panel p{
+ max-width:min(600px,100%);
+ font-size:clamp(12px,1.4vw,15px)!important;
+ line-height:1.6!important;
+ padding-inline:5px;
+ overflow-wrap:break-word;
+}
+#vyranteMode .mode-clock{
+ max-width:min(520px,100%);
+ margin-inline:auto;
+ gap:clamp(4px,1.1vw,10px)!important;
+}
+#vyranteMode .mode-clock>div{
+ padding:clamp(9px,1.7vw,16px) 4px!important;
+ min-width:0;
+}
+#vyranteMode .mode-clock strong{
+ font-size:clamp(23px,3.7vw,43px)!important;
+ line-height:1.08!important;
+}
+#vyranteMode .mode-clock span{
+ font-size:clamp(8px,1.1vw,10px)!important;
+ letter-spacing:.06em!important;
+}
+@media(max-width:480px){
+ #vyranteMode .mode-panel{
+  padding:22px 7px!important;
+  gap:15px!important;
+ }
+ #vyranteMode .mode-panel h1{
+  font-size:clamp(28px,8.2vw,39px)!important;
+  letter-spacing:-.014em!important;
+  line-height:1.095!important;
+ }
+ #vyranteMode .mode-panel img{
+  width:min(140px,38vw)!important;
+  margin-bottom:6px!important;
+ }
+ #vyranteMode .mode-clock strong{font-size:clamp(23px,7vw,32px)!important}
 }
