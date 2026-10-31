@@ -48,6 +48,7 @@
     document.querySelector("#vyrant-event-particles")?.remove();
     if(countdown){clearInterval(countdown);countdown=null;}
     if(observer){observer.disconnect();observer=null;}
+    window.VyrantMagic?.stopStore();
   }
   function decorate(){
     if(!mode)return;
@@ -192,16 +193,18 @@
   }
   function setTheme(m){
     ++serial;
-    const previous=mode;
+    const theme=m?.storeTheme!==undefined?m.storeTheme:(m?.type==='event'?m.eventTheme:'original');
+    const selected=LABELS[theme]?theme:null;
+    if(mode===selected)return;
     removeSeasonal();
-    mode = m&&m.type==="event"?(LABELS[m.eventTheme]?m.eventTheme:"christmas"):null;
+    mode=selected;
     document.body.classList.remove("vyrant-christmas","vyrant-newyear","vyrant-valentines","vyrant-halloween","vyrant-easter");
     if(!mode){introTheme=null;closeIntro(true);return;}
     if(introTheme!==mode){introTheme=mode;showIntro(mode);}
     const d=LABELS[mode];
     document.body.classList.add("vyrant-"+mode);
     createBanner(m,d);
-    createSky(mode);
+    window.VyrantMagic?.activateStore(mode);
     decorate();
     const app=document.querySelector("#app");
     if(app){
@@ -209,16 +212,14 @@
       observer.observe(app,{childList:true});
     }
   }
-  window.applyVyrantEvent=function(m){
-    try{if(typeof ORIGINAL==="function")ORIGINAL(m&&m.type==="event"&&!["christmas","newyear"].includes(m.eventTheme)?{type:"normal"}:m);}catch(err){console.warn("VYRANT theme base",err);}
-    setTheme(m);
-  };
+  window.applyVyrantEvent=function(data){setTheme(data);};
   function onLoaded(){
     fetch("/api/public",{cache:"no-store"})
       .then(r=>r.ok?r.json():Promise.reject(Error("API")))
-      .then(d=>{if(d&&d.mode)window.applyVyrantEvent(d.mode);})
+      .then(d=>{if(d&&d.storeTheme!==undefined)window.applyVyrantEvent(d);})
       .catch(()=>{ /* The storefront remains usable in the default visual. */ });
   }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",onLoaded,{once:true});
   else onLoaded();
+  setInterval(()=>{if(!document.hidden)onLoaded();},15000);
 })();
