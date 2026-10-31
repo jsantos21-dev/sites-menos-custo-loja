@@ -14,7 +14,7 @@ function enhance(){
  var p=catalog.find(q=>q.id===id);if(!p)return;
  var photos=images(p),sig=id+"|"+photos.join("|");
  if(gallery.dataset.vySignature===sig&&document.getElementById("pdpQuantity"))return;
- createCarousel(gallery,p,photos);createQuantity(info);
+ createCarousel(gallery,p,photos);createQuantity(info,p);
 }
 function createCarousel(gallery,p,photos){
  gallery.replaceChildren();
@@ -55,17 +55,18 @@ function createCarousel(gallery,p,photos){
  track.addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();go(Number(gallery.dataset.vyCurrent||0)+(e.key==="ArrowRight"?1:-1));}});
  gallery.append(frame,thumbs);select(0);
 }
-function createQuantity(info){
+function createQuantity(info,p){
+ var limit=Math.min(10,Math.max(1,Math.trunc(Number(p.maxPerOrder)||10)));
  var add=info.querySelector("#addToCart");if(!add)return;
  info.querySelector("#vyQtyBox")?.remove();
  var wrap=element("div","vy-qty-wrap");wrap.id="vyQtyBox";
  var label=element("label","vy-qty-label","Quantidade");label.htmlFor="pdpQuantity";
- var hint=element("small","vy-qty-hint","Até 10 peças por tamanho");
+ var hint=element("small","vy-qty-hint","Até "+limit+" peças por tamanho");
  var controls=element("div","vy-quantity"),down=element("button","vy-qty-button","−"),up=element("button","vy-qty-button","+"),input=element("input","vy-qty-input");
  down.type=up.type="button";down.setAttribute("aria-label","Diminuir quantidade");up.setAttribute("aria-label","Aumentar quantidade");
- input.id="pdpQuantity";input.type="number";input.min="1";input.max="10";input.step="1";input.inputMode="numeric";input.value="1";input.setAttribute("aria-label","Quantidade de peças");
+ input.id="pdpQuantity";input.type="number";input.min="1";input.max=String(limit);input.step="1";input.inputMode="numeric";input.value="1";input.setAttribute("aria-label","Quantidade de peças");
  controls.append(down,input,up);wrap.append(label,hint,controls);add.before(wrap);
- var set=n=>{n=clamp(n);input.value=n;down.disabled=n<=1;up.disabled=n>=10;};
+ var set=n=>{n=Math.min(limit,clamp(n));input.value=n;down.disabled=n<=1;up.disabled=n>=limit;};
  down.addEventListener("click",()=>set(Number(input.value)-1));up.addEventListener("click",()=>set(Number(input.value)+1));
  input.addEventListener("change",()=>set(input.value));input.addEventListener("blur",()=>set(input.value));
  set(1);
