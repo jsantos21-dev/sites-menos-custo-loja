@@ -69,46 +69,152 @@ class Field{
  }
  stop(){this.active=false;if(this.raf)cancelAnimationFrame(this.raf);this.el.remove();}
 }
+/* Five bespoke multi-instrument, original instrumental compositions.
+   No third-party recordings or copyrighted arrangements used. */
+const SCORES={
+ christmas:{
+  bpm:122,meter:4,lead:"bell",pad:"string",bass:"soft",name:"Noite de Luzes",
+  chords:[[60,64,67],[55,59,62],[57,60,64],[53,57,60],[60,64,67],[57,60,64],[53,57,60],[55,59,62]],
+  melody:[
+  79,-1,79,81,79,76,74,-1,76,79,81,79,76,74,72,-1,
+  74,76,79,76,74,72,74,-1,76,74,72,76,79,-1,76,-1,
+  79,81,84,81,79,76,74,-1,76,79,81,84,83,79,76,-1,
+  81,79,76,74,72,74,76,-1,79,76,74,72,74,-1,72,-1]
+ },
+ newyear:{
+  bpm:115,meter:4,lead:"brass",pad:"string",bass:"round",name:"Horizontes de Ouro",
+  chords:[[60,64,67],[57,60,64],[53,57,60],[55,59,62],[60,64,67],[53,57,60],[57,60,64],[55,59,62]],
+  melody:[
+  72,-1,76,-1,79,81,84,-1,83,81,79,76,79,-1,76,-1,
+  77,79,81,84,81,-1,79,77,76,-1,79,-1,84,-1,83,-1,
+  84,86,88,84,81,-1,79,81,84,-1,79,76,77,79,81,-1,
+  86,84,81,79,76,77,79,-1,81,79,76,74,76,-1,72,-1]
+ },
+ valentines:{
+  bpm:78,meter:3,lead:"harp",pad:"warm",bass:"soft",name:"Entre Dois Corações",
+  chords:[[57,60,64],[53,57,60],[60,64,67],[55,59,62],[57,60,64],[53,57,60],[62,65,69],[57,60,64]],
+  melody:[
+  76,-1,79,81,79,76, 74,-1,76,79,76,72,
+  72,-1,74,76,79,76, 74,-1,72,71,72,-1,
+  76,-1,79,84,81,79, 76,-1,74,76,79,-1,
+  81,-1,79,76,74,72, 74,-1,76,74,72,-1]
+ },
+ halloween:{
+  bpm:102,meter:3,lead:"spooky",pad:"organ",bass:"dark",name:"Baile da Meia-Noite",
+  chords:[[50,53,57],[53,56,60],[46,50,53],[49,52,56],[50,53,57],[46,50,53],[53,56,60],[49,52,56]],
+  melody:[
+  74,-1,77,78,77,-1, 72,73,74,-1,69,-1,
+  70,72,73,76,73,-1, 69,-1,70,68,69,-1,
+  74,77,81,78,77,-1, 76,73,74,-1,72,-1,
+  70,68,69,73,72,-1, 74,-1,69,65,62,-1]
+ },
+ easter:{
+  bpm:112,meter:4,lead:"flute",pad:"warm",bass:"round",name:"Jardim de Renovação",
+  chords:[[62,66,69],[57,61,64],[59,62,66],[55,59,62],[62,66,69],[59,62,66],[55,59,62],[57,61,64]],
+  melody:[
+  74,-1,78,81,83,81,78,-1, 76,78,81,83,81,78,74,-1,
+  76,78,81,78,76,74,76,-1, 78,-1,81,83,86,-1,83,-1,
+  86,83,81,78,74,76,78,-1, 81,83,86,88,86,83,81,-1,
+  83,81,78,76,74,76,78,-1, 81,78,76,74,78,-1,74,-1]
+ }
+};
+let musicNext=0,musicStep=0,musicActive="",master=null;
+function tone(midi,at,len,voice,vol){
+ if(!audio||muted||!Number.isFinite(midi))return;
+ const envelope=audio.createGain(),shape=audio.createBiquadFilter();
+ const base=440*Math.pow(2,(midi-69)/12);
+ const duration=Math.max(.065,len),sharp=voice==="bell"||voice==="harp";
+ let waveform=voice==="brass"?"sawtooth":voice==="organ"?"square":voice==="flute"?"sine":voice==="string"?"sawtooth":voice==="warm"?"triangle":voice==="spooky"?"triangle":"sine";
+ shape.type="lowpass";
+ shape.frequency.value=voice==="organ"?1000:voice==="brass"?1400:voice==="string"?1000:voice==="dark"?570:voice==="flute"?2300:3000;
+ const attack=sharp?.008:voice==="string"||voice==="warm"?.095:.027;
+ const peak=Math.max(.0002,vol||.01);
+ envelope.gain.setValueAtTime(.0001,at);
+ envelope.gain.exponentialRampToValueAtTime(peak,at+attack);
+ envelope.gain.exponentialRampToValueAtTime(.0001,at+duration);
+ const osc=audio.createOscillator();osc.type=waveform;osc.frequency.setValueAtTime(base,at);
+ if(voice==="spooky")osc.detune.setValueAtTime(-11,at);
+ osc.connect(shape);shape.connect(envelope);envelope.connect(master);
+ osc.start(at);osc.stop(at+duration+.015);
+ if((voice==="bell"||voice==="harp")&&vol>.014){
+  const harmon=audio.createOscillator(),hg=audio.createGain();
+  harmon.type="sine";harmon.frequency.value=base*(voice==="bell"?2.01:2);
+  hg.gain.setValueAtTime(.0001,at);hg.gain.exponentialRampToValueAtTime(peak*.16,at+.009);
+  hg.gain.exponentialRampToValueAtTime(.0001,at+duration*.72);
+  harmon.connect(hg);hg.connect(master);harmon.start(at);harmon.stop(at+duration+.02);
+ }
+}
+function scheduleStep(theme,i,at){
+ const score=SCORES[theme],meter=score.meter,barSteps=meter*2,bpm=score.bpm;
+ const beat=60/bpm;
+ const note=score.melody[i%score.melody.length];
+ const length=.5*beat;
+ if(note>=0){
+  const next=score.melody[(i+1)%score.melody.length];
+  tone(note,at,length*(next<0?1.75:.87),score.lead,score.lead==="brass"?.025:.029);
+ }
+ const atBar=i%barSteps;
+ const chordIndex=Math.floor(i/barSteps)%score.chords.length;
+ const chord=score.chords[chordIndex],bass=chord[0]-12;
+ if(atBar===0){
+  tone(bass,at,beat*(meter===3?1.2:1.55),score.bass,.032);
+  chord.forEach((n,k)=>tone(n,at+k*.014,beat*(meter===3?2.2:2.9),score.pad,.008));
+ }
+ if(atBar===3||atBar===5){
+  tone(chord[(i+chordIndex)%3]+12,at,beat*.37,score.lead,.0085);
+ }
+ if(theme==="christmas"&&(atBar===2||atBar===6))tone(96,at,beat*.13,"bell",.007);
+ if(theme==="newyear"&&(atBar===0||atBar===4))tone(chord[2]+12,at,beat*.45,"brass",.011);
+ if(theme==="halloween"&&(atBar===2||atBar===4))tone(bass+12,at,beat*.35,"organ",.016);
+}
+function stopMusic(){
+ if(melodyTimer){clearInterval(melodyTimer);melodyTimer=null;}
+ musicActive="";
+}
 function startAudio(){
  if(muted)return;
+ const theme=screenTheme||storeTheme;
+ if(!theme||!SCORES[theme]){stopMusic();return;}
  try{
-  if(!audio){const C=window.AudioContext||window.webkitAudioContext;if(!C)return;audio=new C();}
-  if(audio.state==="suspended")audio.resume().catch(()=>{});
-  if(melodyTimer)clearInterval(melodyTimer);
-  noteIndex=0;
+  if(!audio){
+   const Audio=window.AudioContext||window.webkitAudioContext;
+   if(!Audio)return;
+   audio=new Audio();master=audio.createGain();master.gain.value=.18;master.connect(audio.destination);
+  }
+  if(audio.state==="suspended"){audio.resume().then(()=>{if(!muted)startAudio();}).catch(()=>{});return;}
+  stopMusic();musicActive=theme;musicStep=0;musicNext=audio.currentTime+.05;
   melodyTimer=setInterval(()=>{
-   const theme=screenTheme||storeTheme;
-   if(!theme||!themes[theme])return;
-   const step=noteIndex++%11;
-   if(step>=6)return;
-   sound(themes[theme].tune[step],.28,.018,themes[theme].wave);
-  },510);
- }catch(e){console.warn("Áudio indisponível:",e.message);}
+   if(muted||!audio||audio.state!=="running"||document.hidden)return;
+   const current=screenTheme||storeTheme;
+   if(current!==musicActive){startAudio();return;}
+   const d=60/SCORES[musicActive].bpm/2;
+   if(musicNext<audio.currentTime)musicNext=audio.currentTime+.04;
+   while(musicNext<audio.currentTime+.18){
+    scheduleStep(musicActive,musicStep,musicNext);
+    musicStep++;musicNext+=d;
+   }
+  },80);
+ }catch(e){console.warn("Áudio temático indisponível",e);}
 }
 function sound(note,duration=.13,level=.027,wave="sine"){
- if(muted||!audio)return;
- const now=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();
- osc.type=wave;osc.frequency.value=440*Math.pow(2,(note-69)/12);
- gain.gain.setValueAtTime(.0001,now);
- gain.gain.exponentialRampToValueAtTime(Math.max(.001,level),now+.025);
- gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
- osc.connect(gain);gain.connect(audio.destination);osc.start(now);osc.stop(now+duration+.015);
+ if(muted||!audio||!master)return;
+ tone(note,audio.currentTime+.008,duration,wave==="triangle"?"harp":"bell",level);
 }
 function setAudioButtonLabels(){
  document.querySelectorAll(".vyrant-audio-button").forEach(button=>{
-  button.textContent=muted?"♪ Ativar som":"♫ Silenciar";
+  button.textContent=muted?"♪ Ouvir música "+(themes[screenTheme||storeTheme]?.label||"temática"):"♫ Silenciar música";
   button.setAttribute("aria-pressed",String(!muted));
  });
 }
 function toggleAudio(){
  muted=!muted;
- if(muted){if(melodyTimer)clearInterval(melodyTimer);melodyTimer=null;}
+ if(muted){stopMusic();}
  else startAudio();
  setAudioButtonLabels();
 }
 function audioButton(where,mode){
  const button=make("button","vyrant-audio-button"+(mode==="screen"?" screen-audio":""));
- button.type="button";button.textContent="♪ Ativar som";button.setAttribute("aria-label","Ativar ou silenciar música original e efeitos do evento");
+ button.type="button";button.textContent="♪ Ouvir música";button.setAttribute("aria-label","Ativar ou silenciar música original e efeitos do evento");
  button.setAttribute("aria-pressed",String(!muted));
  button.addEventListener("click",e=>{e.stopPropagation();toggleAudio();});
  where.append(button);setAudioButtonLabels();
@@ -118,7 +224,7 @@ document.addEventListener("click",e=>{
  if(muted||e.target.closest(".vyrant-audio-button"))return;
  if(e.target.closest("button,a,[role='button'],select,input[type='checkbox']")){
   const theme=screenTheme||storeTheme;
-  if(theme&&themes[theme])sound(themes[theme].tune[(noteIndex+2)%6]+12,.09,.014,themes[theme].wave);
+  if(theme&&themes[theme])sound(themes[theme].tune[(++noteIndex)%themes[theme].tune.length]+12,.085,.011,themes[theme].wave);
  }
 },true);
 function stopStore(){
