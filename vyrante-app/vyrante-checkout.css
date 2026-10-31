@@ -20,3 +20,9 @@ body.theme-christmas{--accent:#f4dbb0;--accent-bright:#ffe9c6}body.theme-newyear
 @media(max-width:950px){.checkout-grid{grid-template-columns:minmax(0,1fr);gap:26px}.summary{position:relative;top:auto;order:-1}.checkout-main{padding-top:31px}.summary-inner{padding:20px}.summary h2{margin-bottom:12px}.header-center{display:none}.checkout-header{grid-template-columns:1fr auto}}
 @media(max-width:600px){.checkout-header{min-height:70px;padding:14px 16px}.brand-link{font-size:19px;gap:9px;letter-spacing:.12em}.brand-emblem{width:35px;height:35px;font-size:22px}.brand-link small{font-size:6px}.header-back{font-size:19px}.header-back span{display:none}.checkout-main{padding:25px 16px 48px}.heading{margin-bottom:26px}.heading h1{font-size:clamp(39px,11vw,61px)}.heading>p:last-child{font-size:12px}.stepper{gap:5px}.step{gap:5px;font-size:9px}.step span{width:27px;height:27px;font-size:9px}.step-line{min-width:6px}.flow-card{padding:22px 16px}.fields{grid-template-columns:1fr;gap:13px}.field.full{grid-column:auto}.actions{grid-template-columns:1fr}.secondary{order:2}.checkout-footer{flex-direction:column;padding:20px 16px}.checkout-grid{gap:21px}.demo-bar{flex-wrap:wrap;column-gap:6px;padding:7px 11px;font-size:9px}.heading h1{line-height:1.02}.summary-inner{padding:18px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* VYRANTE official brand assets: intrinsic transparency, no colored backdrop. */
+.brand-link .checkout-official-logo{display:block;width:clamp(180px,23vw,270px);height:auto;max-height:68px;object-fit:contain;object-position:left center;background:none!important;mix-blend-mode:normal}
+.checkout-summary-mark{display:block;width:30px;height:30px;object-fit:contain;margin:0 auto 10px}
+.summary-foot>span{display:block}
+@media(max-width:600px){.brand-link .checkout-official-logo{width:clamp(155px,52vw,225px);max-height:50px}}
